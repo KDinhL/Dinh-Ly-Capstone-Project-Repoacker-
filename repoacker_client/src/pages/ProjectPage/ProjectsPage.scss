@@ -1,0 +1,21 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+
+.ProjectPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    align-items: center
+  }
+  
+  .ProjectPage__column {
+  
+    width: 80%;
+    overflow: auto;
+    padding: 20px;
+    height: 50vh;
+    box-sizing: border-box;
+  }
