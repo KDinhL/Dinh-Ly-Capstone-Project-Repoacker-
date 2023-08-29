@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { urlAllProjects } from "../../utils/api-utils";
 import "./ProjectList.scss";
 
-export default function ProjectList() {
+export default function ProjectList({ onProjectClick }) {
   const [projects, setProjects] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProjects();
@@ -15,8 +14,6 @@ export default function ProjectList() {
   const fetchProjects = async () => {
     try {
       const url = urlAllProjects();
-      console.log("URL for fetching projects:", url);
-
       const response = await axios.get(url);
       setProjects(response.data);
     } catch (error) {
@@ -24,13 +21,8 @@ export default function ProjectList() {
     }
   };
 
-  const handleProjectClick = (projectId) => {
-    console.log("Clicked project ID:", projectId);
-    navigate(`/projects/${projectId}`);
-  };
-
   return (
-    <div>
+    <div className="PL">
       <h2>Project List</h2>
       <table className="PL__project-table">
         <thead>
@@ -49,12 +41,9 @@ export default function ProjectList() {
           {projects.map((project) => (
             <tr key={project.project_id}>
               <td>
-                <a
-                  href="#"
-                  onClick={() => handleProjectClick(project.project_id)}
-                >
+                <Link to={`/projects/${project.project_id}`}>
                   {project.project_name}
-                </a>
+                </Link>
               </td>
               <td>{project.project_description}</td>
               <td>
