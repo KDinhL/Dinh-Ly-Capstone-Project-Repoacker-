@@ -26,6 +26,7 @@ const index = async (req, res) => {
         project.project_status_percentage = averageTaskPercentage.toString();
       }
       const projectInfo = {
+        project_id: project.id,
         project_name: project.project_name,
         project_description: project.project_description,
         tasks_name: tasks.map(task => task.task_name),
@@ -45,25 +46,41 @@ const index = async (req, res) => {
   }
 };
 
-const getProjectById = (req, res) => {
+const getProjectById = async (req, res) => {
   const projectId = req.params.id;
-  knex("projects")
-    .where({ id: projectId })
-    .first()
-    .then((project) => {
-      if (!project) {
-        return res.status(400).json({
-          message: "Project not found",
-        });
-      }
-      res.status(200).json(project);
-    })
-    .catch((error) => {
-      console.error(error);
-      res
-        .status(500)
-        .json({ message: "An error occurred while fetching data" });
-    });
+
+  try {
+    const project = await knex("projects").where({ id: projectId }).first();
+
+    if (!project) {
+      return res.status(400).json({
+        message: "Project not found",
+      });
+    }
+
+    const tasks = await knex("tasks").where("project_id", project.id);
+    const startDate = new Date(project.project_start_date);
+    const deadline = new Date(project.project_deadline);
+    const today = new Date();
+
+    const remainingDays = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+
+    if (remainingDays < 0) {
+      project.project_status_percentage = "OverDue";
+    }
+    if (tasks.length === 0) {
+      project.project_status_percentage = "in-process";
+    } else {
+      const totalTaskPercentage = tasks.reduce((sum, task) => sum + task.task_status_percentage, 0);
+      const averageTaskPercentage = totalTaskPercentage / tasks.length;
+      project.project_status_percentage = averageTaskPercentage.toString();
+    }
+
+    res.status(200).json(project);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred while fetching data" });
+  }
 };
 
 const updateProjectDetails = (req, res) => {

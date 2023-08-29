@@ -6,7 +6,7 @@ module.exports =
       project_description: 'this is projectA Description',
       project_start_date: '2023-08-03',
       project_deadline: '2023-08-29',
-      project_status_percentage: 75,
+      project_status_percentage: 69,
     },
     {
       id: 2,
@@ -14,7 +14,7 @@ module.exports =
       project_description: 'this is projectB Description',
       project_start_date: '2023-08-01',
       project_deadline: '2023-08-30',
-      project_status_percentage: 65,
+      project_status_percentage: 40,
     },
     {
       id: 3,

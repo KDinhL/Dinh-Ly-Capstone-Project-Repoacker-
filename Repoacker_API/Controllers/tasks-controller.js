@@ -147,14 +147,15 @@ const createTask = (req, res) => {
         });
       }
 
-      if(newTask.task_deadline > project.project_deadline) {
+      // Fetch the project details to compare deadlines
+      const project = projectsFound[0];
+
+      if (newTask.task_deadline > project.project_deadline) {
         return res.status(400).json({
-            message: "Task deadline cannot be older than project deadline",
+          message: "Task deadline cannot be older than project deadline",
         });
-    }
+      }
 
-
-    
       knex("tasks")
         .insert(newTask)
         .then(() => {
