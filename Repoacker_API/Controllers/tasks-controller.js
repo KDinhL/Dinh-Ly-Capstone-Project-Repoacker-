@@ -1,5 +1,11 @@
 const knex = require("knex")(require("../knexfile"));
 
+const remainingDays = (deadline) => {
+  const today = new Date();
+  const taskDeadline = new Date(deadline);
+  return Math.ceil((taskDeadline - today) / (1000 * 60 * 60 * 24));
+};
+
 const index = (req, res) => {
   knex("tasks")
     .select(
@@ -15,7 +21,11 @@ const index = (req, res) => {
     )
     .join("projects", "tasks.project_id", "projects.id")
     .then((data) => {
-      res.status(200).json(data);
+      const tasksWithRemainingDays = data.map((task) => ({
+        ...task,
+        remaining_days: remainingDays(task.task_deadline),
+      }));
+      res.status(200).json(tasksWithRemainingDays);
     })
     .catch((err) =>
       res.status(400).send(`Error retrieving Tasks: ${err}`)

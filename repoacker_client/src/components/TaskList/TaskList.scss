@@ -1,0 +1,30 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.TL {
+  text-align: center;
+
+  &__project-selection {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  &__task-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+
+    th,
+    td {
+      border: 1px solid $border-color;
+      padding: 8px;
+    }
+
+    th {
+      background-color: $background-color-2;
+      font-weight: bold;
+    }
+  }
+}

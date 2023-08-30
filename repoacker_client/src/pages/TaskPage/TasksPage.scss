@@ -1,0 +1,28 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.TasksPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.TasksPage__column-PL {
+    width: 80%;
+  overflow: auto;
+  padding: 20px;
+  height: 30vh;
+  box-sizing: border-box;
+}
+
+.TasksPage__column-TD {
+    width: 80%;
+  overflow: auto;
+  padding: 20px;
+  height: 70vh;
+  box-sizing: border-box;
+}

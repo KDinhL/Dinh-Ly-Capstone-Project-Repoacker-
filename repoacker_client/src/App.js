@@ -9,6 +9,7 @@ import TaskList from './components/TaskList/TaskList';
 import TaskDetails from './components/TaskDetails/TaskDetails';
 import NotFound from './components/NotFound/NotFound';
 import ProjectsPage from "./pages/ProjectPage/ProjectsPage";
+import TasksPage from "./pages/TaskPage/TasksPage";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route path="/projects" element={<ProjectsPage />}>
           <Route path=":projectId" element={<ProjectDetails />} />
         </Route>
-        <Route path="/tasks/:taskId" element={<TaskDetails />} />
+        <Route path="/tasks" element={<TasksPage />} /> {/* Route to TaskList */}
+        <Route path="/tasks/:taskId" element={<TaskDetails />} /> {/* Route to TaskDetail */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

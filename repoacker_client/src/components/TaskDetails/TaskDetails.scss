@@ -1,0 +1,44 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+$border-color: #000; 
+$border-radius: 4px; 
+.TaskDetails {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $background-color-1;
+  
+  &__content {
+    width: 80%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: $border-radius; // Use the defined variable here
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+    &__row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      h1 {
+        font-size: 18px;
+        margin-right: 10px;
+        width: 150px;
+      }
+
+      input,
+      textarea {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid $primary-color-2;
+        border-radius: $border-radius; // Use the defined variable here
+        font-family: inherit;
+        font-size: inherit;
+      }
+    }
+  }
+}
