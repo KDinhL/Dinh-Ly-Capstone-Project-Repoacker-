@@ -26,7 +26,7 @@ export default function AllReportPage() {
       <div className="project-list">
         {projects.map((project) => (
           <div key={project.project_id}>
-            <ProjectDetailsLoader project={project} />
+            <ProjectDetailsLoader projectId={project.project_id} />
             <ProjectTasks projectId={project.project_id} />
           </div>
         ))}
@@ -35,23 +35,22 @@ export default function AllReportPage() {
   );
 }
 
-function ProjectDetailsLoader({ project }) {
+function ProjectDetailsLoader({ projectId  }) {
 
 
   const [projectDetails, setProjectDetails] = useState(null);
 
   useEffect(() => {
-    fetchProjectDetails();
-  }, [project]);
+    fetchProjectDetails(); 
+  }, [projectId]);
 
   const fetchProjectDetails = async () => {
     const url = process.env.REACT_APP_BASE_URL;
     try {
-      const response = await axios.get(urlProjectById(project.project_id), {
+      const response = await axios.get(urlProjectById(projectId ), {
         baseURL: url, 
       });
       setProjectDetails(response.data.id);
-      console.log("Project:", response.data.id);
 
     } catch (error) {
       console.error("Error fetching project details:", error);

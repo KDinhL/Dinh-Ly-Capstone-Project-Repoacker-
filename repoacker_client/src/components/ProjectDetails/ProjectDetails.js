@@ -3,12 +3,26 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { urlProjectById, urlProjectTasks } from "../../utils/api-utils";
 import "./ProjectDetails.scss";
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  Label,
+} from "recharts";
 
 export default function ProjectDetails({ projectId }) {
-  // const { projectId } = useParams();
+  const { projectId: routeProjectId } = useParams();
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [currentProjectId] = useState(projectId || routeProjectId);
 
   const calculateRemainingDays = (deadline) => {
     const currentDate = new Date();
@@ -19,13 +33,15 @@ export default function ProjectDetails({ projectId }) {
   };
 
   useEffect(() => {
-    fetchProjectData();
-    fetchProjectTasks();
-  }, [projectId]);
+    if (currentProjectId) {
+      fetchProjectData();
+      fetchProjectTasks();
+    }
+  }, [currentProjectId]);
 
   const fetchProjectData = async () => {
     try {
-      const response = await axios.get(urlProjectById(projectId));
+      const response = await axios.get(urlProjectById(currentProjectId));
       setProject(response.data);
     } catch (error) {
       console.error("Error fetching project data:", error);
@@ -34,7 +50,7 @@ export default function ProjectDetails({ projectId }) {
 
   const fetchProjectTasks = async () => {
     try {
-      const response = await axios.get(urlProjectTasks(projectId));
+      const response = await axios.get(urlProjectTasks(currentProjectId));
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching project tasks:", error);
@@ -49,7 +65,7 @@ export default function ProjectDetails({ projectId }) {
 
     const data = [
       { name: "Project Percentage", value: parseFloat(project.project_status_percentage) },
-      { name: "Remaining", value: 100 - parseFloat(project.project_status_percentage) }
+      { name: "Remaining", value: 100 - parseFloat(project.project_status_percentage) },
     ];
 
     const isStatusInProcessOrDrop = project.project_status === "in-process" || project.project_status === "drop";
@@ -82,7 +98,6 @@ export default function ProjectDetails({ projectId }) {
     );
   };
 
-
   const renderCustomPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -105,12 +120,12 @@ export default function ProjectDetails({ projectId }) {
   const renderTaskChart = () => {
     if (!tasks.length) return null;
 
-    const data = tasks.map(task => ({
+    const data = tasks.map((task) => ({
       task_name: task.task_name,
-      task_status_percentage: task.task_status_percentage
+      task_status_percentage: task.task_status_percentage,
     }));
 
-    const isAnyTaskInProcessOrDrop = tasks.some(task => task.task_status === "in-process" || task.task_status === "drop");
+    const isAnyTaskInProcessOrDrop = tasks.some((task) => task.task_status === "in-process" || task.task_status === "drop");
 
     const supportingColor = "#158463";
 
@@ -135,9 +150,7 @@ export default function ProjectDetails({ projectId }) {
         </BarChart>
       </ResponsiveContainer>
     );
-  }
-
-
+  };
 
   return (
     <div className="ProjectDetails">
@@ -145,7 +158,9 @@ export default function ProjectDetails({ projectId }) {
         <h2>{project ? project.project_name : "Loading..."}</h2>
         {project && (
           <p>
-            Start Date: {project.project_start_date} | Deadline: {project.project_deadline} | Remaining Days: {calculateRemainingDays(project.project_deadline)}
+            Start Date: {project.project_start_date} | Deadline:{" "}
+            {project.project_deadline} | Remaining Days:{" "}
+            {calculateRemainingDays(project.project_deadline)}
           </p>
         )}
       </div>
@@ -158,10 +173,13 @@ export default function ProjectDetails({ projectId }) {
       <div className="ProjectDetails__tasks">
         <h3>Projects Details</h3>
         <ul>
-          {tasks.map(task => (
+          {tasks.map((task) => (
             <li key={task.id}>
               <a>{task.task_name}</a>
-              <p>Start Date: {task.task_start_date} | Deadline: {task.task_deadline}</p>
+              <p>
+                Start Date: {task.task_start_date} | Deadline:{" "}
+                {task.task_deadline}
+              </p>
             </li>
           ))}
         </ul>

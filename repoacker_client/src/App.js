@@ -18,8 +18,8 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/projects" element={<ProjectsPage />}>
-          <Route path=":projectId" element={<ProjectDetails />} />
-        </Route>
+        <Route path="/projects/:projectId" element={<ProjectDetails />} />
+</Route>
         <Route path="/tasks" element={<TasksPage />}>
           <Route path="/tasks/:taskId" element={<TaskDetails />} />
         </Route>
