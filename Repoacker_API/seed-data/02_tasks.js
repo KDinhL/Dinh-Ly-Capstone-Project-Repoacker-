@@ -3,6 +3,7 @@ module.exports =
     {
       id: 1,
       project_id: 1,
+      task_project_name: 'Project A',
       task_name: 'task A For project A',
       task_description:
         'This the example for TaskA for Project A.',
@@ -15,6 +16,7 @@ module.exports =
     {
       id: 2,
       project_id: 1,
+      task_project_name: 'Project A',
       task_name: 'task B For project A',
       task_description:
         'This the example for TaskB for Project A.',
@@ -27,6 +29,7 @@ module.exports =
     {
       id: 3,
       project_id: 2,
+      task_project_name: 'Project B',
       task_name: 'task A For project B',
       task_description:
         'This the example for TaskA for Project B.',

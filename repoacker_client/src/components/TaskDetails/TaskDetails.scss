@@ -2,43 +2,38 @@
 @import '../../styles/partials/mixins.scss';
 @import '../../styles/partials/variables.scss';
 
-$border-color: #000; 
-$border-radius: 4px; 
 .TaskDetails {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: $background-color-1;
-  
+  background-color: $background-color-2;
+  padding: 20px;
+
   &__content {
     width: 80%;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: $border-radius; // Use the defined variable here
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
 
     &__row {
       display: flex;
       align-items: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
 
       h1 {
+        flex: 1;
+        margin: 0;
         font-size: 18px;
-        margin-right: 10px;
-        width: 150px;
+        font-weight: bold;
       }
 
       input,
       textarea {
-        flex: 1;
-        padding: 8px;
-        border: 1px solid $primary-color-2;
-        border-radius: $border-radius; // Use the defined variable here
-        font-family: inherit;
-        font-size: inherit;
+        flex: 2;
+        padding: 5px;
+        border: 1px solid $border-color;
+        background-color: $background-color-1;
       }
     }
+  }
+
+  textarea {
+    width: 100%;
+    height: 150px;
   }
 }

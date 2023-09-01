@@ -58,7 +58,9 @@ export default function ProjectList({ onProjectClick }) {
               </td>
               <td>{project.start_date}</td>
               <td>{project.deadline}</td>
-              <td>{project.remaining_days}</td>
+              <td>
+                {project.remaining_days < 0 ? "Over Due" : project.remaining_days}
+              </td>
               <td>{project.project_status_percentage}</td>
             </tr>
           ))}

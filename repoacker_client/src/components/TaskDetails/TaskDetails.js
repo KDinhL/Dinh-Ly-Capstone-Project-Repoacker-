@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./TaskDetails.scss";
+import { urlTaskById } from "../../utils/api-utils"; 
 
 export default function TaskDetails() {
   const { taskId } = useParams();
   const [task, setTask] = useState(null);
 
   useEffect(() => {
-    fetchTask();
-  }, []);
+    fetchTask(taskId);
+  }, [taskId]);
 
   const fetchTask = async () => {
     try {
-      const response = await axios.get(`/api/tasks/${taskId}`);
+      const response = await axios.get(urlTaskById(taskId)); 
       setTask(response.data);
     } catch (error) {
-      console.error("Error fetching task:", error);
     }
   };
 
@@ -30,7 +30,7 @@ export default function TaskDetails() {
           </div>
           <div className="TaskDetails__row">
             <h1>Task N.O</h1>
-            <input type="text" value={task.id} readOnly />
+            <input type="text" value={task.id || ''} readOnly />
           </div>
           <div className="TaskDetails__row">
             <h1>Status</h1>
@@ -42,7 +42,7 @@ export default function TaskDetails() {
           </div>
           <div className="TaskDetails__row">
             <h1>Project</h1>
-            <input type="text" value={task.project_name} readOnly />
+            <input type="text" value={task.task_project_name} readOnly />
           </div>
           <div className="TaskDetails__row">
             <h1>Description</h1>

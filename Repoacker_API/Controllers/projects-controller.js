@@ -16,7 +16,7 @@ const index = async (req, res) => {
       const remainingDays = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
 
       if (remainingDays < 0) {
-        project.project_status_percentage = "OverDue";
+        project.remaining_days = "Over Due";
       }
       if (tasks.length === 0) {
         project.project_status_percentage = "in-process";
@@ -66,7 +66,7 @@ const getProjectById = async (req, res) => {
     const remainingDays = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
 
     if (remainingDays < 0) {
-      project.project_status_percentage = "OverDue";
+      project.remaining_days = "Over Due";
     }
     if (tasks.length === 0) {
       project.project_status_percentage = "in-process";
@@ -147,30 +147,41 @@ const deleteProject = (req, res) => {
     });
 };
 
-const getProjectTasks = (req, res) => {
+const getProjectTasks = async (req, res) => {
   const projectId = req.params.id;
 
-  knex("tasks")
-    .select(
-      "tasks.id",
-      "tasks.task_name",
-      "tasks.task_description",
-      "tasks.task_start_date",
-      "tasks.task_deadline",
-      "tasks.task_status_percentage",
-      "tasks.task_problem",
-      "tasks.task_solution"
-    )
-    .where("tasks.project_id", projectId)
-    .then((tasks) => {
-      res.status(200).json(tasks);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).json({
-        message: `An error occurred while fetching tasks for project with ID: ${projectId}`,
-      });
+  try {
+    const tasks = await knex("tasks")
+      .select(
+        "tasks.id",
+        "tasks.task_name",
+        "tasks.task_description",
+        "tasks.task_start_date",
+        "tasks.task_deadline",
+        "tasks.task_status_percentage",
+        "tasks.task_problem",
+        "tasks.task_solution",
+        "projects.project_name" // Include project_name from projects table
+      )
+      .join("projects", "tasks.project_id", "=", "projects.id") // Join with 'projects' table
+      .where("tasks.project_id", projectId);
+
+    const tasksWithRemainingDays = await Promise.all(
+      tasks.map(async (task) => {
+        const today = new Date();
+        const taskDeadline = new Date(task.task_deadline);
+        const remaining_days = Math.ceil((taskDeadline - today) / (1000 * 60 * 60 * 24));
+        return { ...task, remaining_days };
+      })
+    );
+
+    res.status(200).json(tasksWithRemainingDays);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: `An error occurred while fetching tasks for project with ID: ${projectId}`,
     });
+  }
 };
 
 module.exports = {

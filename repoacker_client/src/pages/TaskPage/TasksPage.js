@@ -5,11 +5,11 @@ import "./TasksPage.scss";
 
 export default function TasksPage() {
   return (
-    <div className="TasksPage">
-      <div className="TasksPage__column-PL">
+    <div className="tasks-page">
+      <div className="tasks-page__column-PL">
         <TaskList />
       </div>
-      <div className="TasksPage__column-TD">
+      <div className="tasks-page__column-TD">
         <Outlet />
       </div>
     </div>

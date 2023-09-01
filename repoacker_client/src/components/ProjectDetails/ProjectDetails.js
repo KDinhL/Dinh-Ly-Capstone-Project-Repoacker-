@@ -78,7 +78,6 @@ export default function ProjectDetails() {
             </text>
           </PieChart>
         </ResponsiveContainer>
-        {/* {renderTaskChart()} */}
       </div>
     );
   };
@@ -113,7 +112,7 @@ export default function ProjectDetails() {
 
     const isAnyTaskInProcessOrDrop = tasks.some(task => task.task_status === "in-process" || task.task_status === "drop");
 
-    const supportingColor = "#158463"; // Define the supporting color directly here
+    const supportingColor = "#158463";
 
     return (
       <ResponsiveContainer width="100%" height={300}>

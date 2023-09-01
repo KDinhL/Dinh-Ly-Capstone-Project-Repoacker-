@@ -2,27 +2,29 @@
 @import '../../styles/partials/mixins.scss';
 @import '../../styles/partials/variables.scss';
 
-.TasksPage {
+.tasks-page {
   width: 100%;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
+  margin: 0;
 
-.TasksPage__column-PL {
+  &__column-PL {
     width: 80%;
-  overflow: auto;
-  padding: 20px;
-  height: 30vh;
-  box-sizing: border-box;
-}
+    overflow: auto;
+    padding: 20px;
+    height: 30vh;
+    box-sizing: border-box;
+  }
 
-.TasksPage__column-TD {
+  &__column-TD {
     width: 80%;
-  overflow: auto;
-  padding: 20px;
-  height: 70vh;
-  box-sizing: border-box;
+    overflow: auto;
+    padding: 20px;
+    height: 70vh;
+    box-sizing: border-box;
+  }
 }
