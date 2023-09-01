@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { urlAllProjects, urlProjectTasks, urlProjectById } from "../../utils/api-utils";
-import ProjectDetails from "../../components/ProjectDetails/ProjectDetails";
+import { urlAllProjects, urlProjectTasks } from "../../utils/api-utils";
 import "./AllReportPage.scss";
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from "recharts";
 
 export default function AllReportPage() {
   const [projects, setProjects] = useState([]);
@@ -14,54 +14,118 @@ export default function AllReportPage() {
   const fetchProjects = async () => {
     try {
       const response = await axios.get(urlAllProjects());
-      setProjects(response.data);
+      const projectData = response.data;
+
+      // Fetch project tasks for each project
+      const projectsWithTasks = await Promise.all(
+        projectData.map(async (project) => {
+          const tasksResponse = await axios.get(urlProjectTasks(project.project_id));
+          return { ...project, tasks: tasksResponse.data };
+        })
+      );
+
+      setProjects(projectsWithTasks);
     } catch (error) {
       console.error("Error fetching projects:", error);
     }
   };
 
-  return (
-    <div className="all-report-page">
-      <h1>All Projects</h1>
+
+  const renderPieChart = (project) => {
+    if (!project) return null;
+
+    const data = [
+      { name: "Project Percentage", value: parseFloat(project.project_status_percentage) },
+      { name: "Remaining", value: 100 - parseFloat(project.project_status_percentage) }
+    ];
+
+    const isStatusInProcessOrDrop = project.project_status === "in-process" || project.project_status === "drop";
+
+    const projectColors = [isStatusInProcessOrDrop ? "#158463" : "#158463", "#BDC5D5"];
+
+    return (
+      <div className="project-pie-chart">
+        <ResponsiveContainer width="50%" height={300}>
+          <PieChart>
+            <Pie
+              data={data}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              innerRadius={60}
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={projectColors[index]} />
+              ))}
+            </Pie>
+            <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="chart-label">
+              {`${data[0].value.toFixed(0)}%`}
+            </text>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  };
+
+  const renderTaskChart = (project) => {
+    if (!project || !project.tasks.length) return null;
+
+    const data = project.tasks.map(task => ({
+      task_name: task.task_name,
+      task_status_percentage: task.task_status_percentage
+    }));
+
+
+    const supportingColor = "#158463"; // Define the supporting color directly here
+
+    return (
+      <div className="project-task-chart">
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={data}>
+            <XAxis dataKey="task_name" />
+            <YAxis domain={[0, 100]} />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="task_status_percentage" fill={supportingColor}>
+              <Label
+                position="top"
+                content={({ x, y, width, value }) => (
+                  <text x={x + width / 2} y={y} fill="#333" textAnchor="middle" dy={-6}>
+                    {`${value}%`}
+                  </text>
+                )}
+              />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  };
+
+  const renderProjectList = () => {
+    return (
       <div className="project-list">
         {projects.map((project) => (
           <div key={project.project_id}>
-            <ProjectDetailsLoader projectId={project.project_id} />
-            <ProjectTasks projectId={project.project_id} />
+            <h2>{project.project_name}</h2>
+            {renderPieChart(project)}
+            {renderTaskChart(project)}
+            <ProjectTasks projectId={project.project_id} /> {/* Including ProjectTasks component */}
           </div>
         ))}
       </div>
-    </div>
-  );
-}
-
-function ProjectDetailsLoader({ projectId  }) {
-
-
-  const [projectDetails, setProjectDetails] = useState(null);
-
-  useEffect(() => {
-    fetchProjectDetails(); 
-  }, [projectId]);
-
-  const fetchProjectDetails = async () => {
-    const url = process.env.REACT_APP_BASE_URL;
-    try {
-      const response = await axios.get(urlProjectById(projectId ), {
-        baseURL: url, 
-      });
-      setProjectDetails(response.data.id);
-
-    } catch (error) {
-      console.error("Error fetching project details:", error);
-    }
+    );
   };
 
-  if (!projectDetails) {
-    return <p>Loading...</p>;
-  }
-
-  return <ProjectDetails projectId={projectDetails} />;
+  return (
+    <div className="all-report-page">
+      <h1>All Projects</h1>
+      {renderProjectList()}
+    </div>
+  );
 }
 
 function ProjectTasks({ projectId }) {
@@ -79,6 +143,7 @@ function ProjectTasks({ projectId }) {
       console.error("Error fetching project tasks:", error);
     }
   };
+
 
   return (
     <div className="task-list">
