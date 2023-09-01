@@ -42,7 +42,7 @@ export default function TaskDetails() {
           </div>
           <div className="TaskDetails__row">
             <h1>Project</h1>
-            <input type="text" value={task.task_project_name} readOnly />
+            <input type="text" value={task.taskproject_name} readOnly />
           </div>
           <div className="TaskDetails__row">
             <h1>Description</h1>

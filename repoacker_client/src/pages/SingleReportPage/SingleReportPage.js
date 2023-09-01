@@ -25,10 +25,11 @@ export default function SingleReportPage() {
       console.error("Error fetching project and tasks:", error);
     }
   };
+  console.log("Tasks:", tasks);
 
   return (
     <div className="single-report-page">
-      {project && <ProjectDetails project={project} />}
+      {project && <ProjectDetails projectId={projectId} />}
       <div className="task-list">
         <h2>Task List</h2>
         <table className="task-table">

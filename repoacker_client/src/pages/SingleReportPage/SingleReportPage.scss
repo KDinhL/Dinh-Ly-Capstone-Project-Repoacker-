@@ -8,8 +8,13 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 80vw;
 
+  .project-list{
+    display: flex;
+    width: 80vw;
+
+  }
   .task-list {
     margin-top: 20px;
     display: flex;

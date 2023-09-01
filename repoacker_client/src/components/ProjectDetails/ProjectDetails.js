@@ -5,8 +5,8 @@ import { urlProjectById, urlProjectTasks } from "../../utils/api-utils";
 import "./ProjectDetails.scss";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from "recharts";
 
-export default function ProjectDetails() {
-  const { projectId } = useParams();
+export default function ProjectDetails({ projectId }) {
+  // const { projectId } = useParams();
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
 

@@ -11,6 +11,7 @@ export default function MainPage() {
     const [selectedProjectId, setSelectedProjectId] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState(false);
+    const [displayAllProjects, setDisplayAllProjects] = useState(false);
 
     useEffect(() => {
         fetchProjects();
@@ -24,6 +25,11 @@ export default function MainPage() {
         } catch (error) {
             console.error("Error fetching projects:", error);
         }
+    };
+
+    const handleDisplayAllProjects = () => {
+        setDisplayAllProjects(true);
+        navigate("/all-report"); // Navigate to the AllReportPage.js
     };
 
     const toggleAdditionalButtons = () => {
@@ -75,10 +81,13 @@ export default function MainPage() {
             {showAdditionalButtons && (
                 <section className="additional-section">
                     <div className="additional-buttons">
-                        <button className="report-button">Display All Projects</button>
+                        <button className="report-button" onClick={handleDisplayAllProjects}>
+                            Display All Projects
+                        </button>
                         <button className="report-button" onClick={handleDisplaySingleProjects}>
                             Display Single Projects
-                        </button>                    </div>
+                        </button>
+                    </div>
                     <div className="project-dropdown">
                         <select
                             className="dropdown-select"

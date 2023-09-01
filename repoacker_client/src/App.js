@@ -9,6 +9,7 @@ import NotFound from './components/NotFound/NotFound';
 import ProjectsPage from "./pages/ProjectPage/ProjectsPage";
 import TasksPage from "./pages/TaskPage/TasksPage";
 import SingleReportPage from "./pages/SingleReportPage/SingleReportPage";
+import AllReportPage from "./pages/AllReportPage/AllReportPage";
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
           <Route path="/tasks/:taskId" element={<TaskDetails />} />
         </Route>
         <Route path="/single-report/:projectId" element={<SingleReportPage />} />
-
+        <Route path="/all-report" element={<AllReportPage />}>
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
