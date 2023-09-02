@@ -10,6 +10,7 @@ import ProjectsPage from "./pages/ProjectPage/ProjectsPage";
 import TasksPage from "./pages/TaskPage/TasksPage";
 import SingleReportPage from "./pages/SingleReportPage/SingleReportPage";
 import AllReportPage from "./pages/AllReportPage/AllReportPage";
+import AddProject from "./components/AddProject/AddProject";
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/projects" element={<ProjectsPage />}>
-        <Route path="/projects/:projectId" element={<ProjectDetails />} />
-</Route>
+          <Route path="/projects/:projectId" element={<ProjectDetails />} />
+          <Route path="add" element={<AddProject />} />
+        </Route>
         <Route path="/tasks" element={<TasksPage />}>
           <Route path="/tasks/:taskId" element={<TaskDetails />} />
         </Route>

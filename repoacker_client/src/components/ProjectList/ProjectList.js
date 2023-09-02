@@ -66,6 +66,8 @@ export default function ProjectList({ onProjectClick }) {
           ))}
         </tbody>
       </table>
+      
     </div>
+    
   );
 }
