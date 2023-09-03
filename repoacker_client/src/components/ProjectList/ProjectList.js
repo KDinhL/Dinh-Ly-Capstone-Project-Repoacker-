@@ -3,8 +3,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { urlAllProjects } from "../../utils/api-utils";
 import "./ProjectList.scss";
-import DeleteProject from "../DeleteProject/DeleteProject"; 
+import DeleteProject from "../DeleteProject/DeleteProject";
 import "../DeleteProject/DeleteProject.scss";
+import EditProject from "../EditPoject/EditProject";
+import Modal from "react-modal";
 
 export default function ProjectList({ onProjectClick }) {
   const [projects, setProjects] = useState([]);
@@ -26,6 +28,9 @@ export default function ProjectList({ onProjectClick }) {
   const handleProjectDelete = () => {
     fetchProjects();
   };
+  const handleProjectEdit = () => {
+    fetchProjects();
+  };
 
   return (
     <div className="PL">
@@ -41,6 +46,7 @@ export default function ProjectList({ onProjectClick }) {
             <th>Deadline</th>
             <th>Remaining Days</th>
             <th>Project Percentage</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -73,13 +79,17 @@ export default function ProjectList({ onProjectClick }) {
                   projectId={project.project_id}
                   onDelete={handleProjectDelete}
                 />
+                <EditProject
+                  projectId={project.project_id}
+                  onEdit={handleProjectEdit}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      
+
     </div>
-    
+
   );
 }

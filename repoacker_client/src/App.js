@@ -11,6 +11,7 @@ import TasksPage from "./pages/TaskPage/TasksPage";
 import SingleReportPage from "./pages/SingleReportPage/SingleReportPage";
 import AllReportPage from "./pages/AllReportPage/AllReportPage";
 import AddProject from "./components/AddProject/AddProject";
+import EditProject from "./components/EditPoject/EditProject";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/projects" element={<ProjectsPage />}>
           <Route path="/projects/:projectId" element={<ProjectDetails />} />
           <Route path="add" element={<AddProject />} />
+          <Route path="/projects/:projectId/edit" element={<EditProject />} />
         </Route>
         <Route path="/tasks" element={<TasksPage />}>
           <Route path="/tasks/:taskId" element={<TaskDetails />} />
