@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { urlAllProjects } from "../../utils/api-utils";
 import "./ProjectList.scss";
+import DeleteProject from "../DeleteProject/DeleteProject"; 
+import "../DeleteProject/DeleteProject.scss";
 
 export default function ProjectList({ onProjectClick }) {
   const [projects, setProjects] = useState([]);
@@ -19,6 +21,10 @@ export default function ProjectList({ onProjectClick }) {
     } catch (error) {
       console.error("Error fetching projects:", error);
     }
+  };
+
+  const handleProjectDelete = () => {
+    fetchProjects();
   };
 
   return (
@@ -62,6 +68,12 @@ export default function ProjectList({ onProjectClick }) {
                 {project.remaining_days < 0 ? "Over Due" : project.remaining_days}
               </td>
               <td>{project.project_status_percentage}</td>
+              <td>
+                <DeleteProject
+                  projectId={project.project_id}
+                  onDelete={handleProjectDelete}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

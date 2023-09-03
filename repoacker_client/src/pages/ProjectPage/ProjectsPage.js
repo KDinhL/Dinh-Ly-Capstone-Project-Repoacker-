@@ -28,8 +28,8 @@ export default function ProjectsPage() {
 
   const addProjectToList = (newProject) => {
     setProjects([...projects, newProject]);
-    setKeyForList(keyForList + 1); // Update the key to force a re-render of ProjectList
-    closeModal(); // Close the modal after adding a project
+    setKeyForList(keyForList + 1); 
+    closeModal(); 
   };
 
   const openModal = () => {
@@ -55,7 +55,7 @@ export default function ProjectsPage() {
         className="modal-content"
         overlayClassName="modal-overlay"
       >
-        <AddProject onProjectAdded={addProjectToList} onClose={closeModal} />
+        <AddProject onProjectAdded={addProjectToList} closeModal={closeModal} />
       </Modal>
       <div>
         {/* Rest of the content */}
