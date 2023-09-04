@@ -13,6 +13,7 @@ function AddTask({ closeModal, project_id, task_project_name, project_start_date
     task_problem: "",
     task_solution: "",
   });
+  const [percentageError, setPercentageError] = useState(false);
 
   const [inputValidity, setInputValidity] = useState({
     task_name: true,
@@ -44,6 +45,15 @@ function AddTask({ closeModal, project_id, task_project_name, project_start_date
         formValid = false;
         newInputValidity[key] = false;
       }
+    }
+
+    const taskStatusPercentage = parseFloat(taskData.task_status_percentage);
+    if (isNaN(taskStatusPercentage) || taskStatusPercentage < 0 || taskStatusPercentage > 100) {
+      formValid = false;
+      newInputValidity["task_status_percentage"] = false;
+      setPercentageError(true); 
+    } else {
+      setPercentageError(false); // Reset the percentage error flag if the value is valid
     }
 
     if (new Date(taskData.task_start_date) < new Date(project_start_date) ||
@@ -187,7 +197,7 @@ function AddTask({ closeModal, project_id, task_project_name, project_start_date
               <span className="error-message">Invalid deadline date.</span>
             )}
           </div>
-          <div className="input-group">
+           <div className="input-group">
             <label htmlFor="task_status_percentage">Status Percentage</label>
             <input
               type="number"
@@ -200,7 +210,11 @@ function AddTask({ closeModal, project_id, task_project_name, project_start_date
             {!inputValidity.task_status_percentage && (
               <span className="error-message">This field is required.</span>
             )}
+            {percentageError && (
+              <span className="error-message">Please enter a number between 0 and 100.</span>
+            )}
           </div>
+
           <div className="input-group">
             <label htmlFor="task_problem">Task Problem</label>
             <textarea

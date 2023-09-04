@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
-import { urlProjectTasks, urlAllProjects, urlProjectById } from "../../utils/api-utils";
+import { Link } from "react-router-dom";
+import { urlProjectTasks, urlAllProjects, urlProjectById, urlTaskById } from "../../utils/api-utils";
 import "./TaskList.scss";
+import DeleteTask from "../DeleteTask/DeleteTask"; // Import the DeleteTask component
 
-export default function TaskList({ onProjectSelect, onTaskAdded, tasks, setTasks  }) {
-  const { projectId } = useParams();
+export default function TaskList({ onProjectSelect, tasks, setTasks  }) {
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState("");
-  // const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     fetchProjects();
@@ -20,7 +19,7 @@ export default function TaskList({ onProjectSelect, onTaskAdded, tasks, setTasks
     } else {
       setTasks([]);
     }
-  }, [selectedProjectId]);
+  }, [selectedProjectId, tasks]);
 
   const fetchProjects = async () => {
     try {
@@ -49,7 +48,6 @@ export default function TaskList({ onProjectSelect, onTaskAdded, tasks, setTasks
     let project_name, project_id, project_start_date, project_deadline;
   
     if (selectedProjectId) {
-      // Make an API call to get project_name using project.project_id
       try {
         const response = await fetch(urlProjectById(selectedProjectId));
         if (response.ok) {
@@ -67,6 +65,16 @@ export default function TaskList({ onProjectSelect, onTaskAdded, tasks, setTasks
     }
   
     onProjectSelect({ project_name, project_id, project_start_date, project_deadline }); 
+  };
+
+  const handleTaskDelete = async (taskId) => {
+    try {
+      await axios.delete(urlTaskById(taskId));
+      // Remove the deleted task from the tasks state
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   };
 
   return (
@@ -97,6 +105,7 @@ export default function TaskList({ onProjectSelect, onTaskAdded, tasks, setTasks
               <th>Deadline</th>
               <th>Remaining Days</th>
               <th>Percentage</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -116,6 +125,12 @@ export default function TaskList({ onProjectSelect, onTaskAdded, tasks, setTasks
                   )}
                 </td>
                 <td>{task.task_status_percentage}%</td>
+                <td>
+                  <DeleteTask
+                    taskId={task.id}
+                    onDelete={() => handleTaskDelete(task.id)}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
