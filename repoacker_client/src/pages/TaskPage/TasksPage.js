@@ -65,10 +65,11 @@ export default function TasksPage() {
           setTasks={setTasks}
         />
       </div>
-      <div className="tasks-page__column-TD">
-        <button className="add-task-button" onClick={openModal}>
+      <button className="add-task-button" onClick={openModal}>
           Add Task
         </button>
+      <div className="tasks-page__column-TD">
+       
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}

@@ -1,6 +1,7 @@
 @import '../../styles/partials/typography';
 @import '../../styles/partials/mixins.scss';
 @import '../../styles/partials/variables.scss';
+
 .add-task {
   max-width: 800px;
   margin: 0 auto;
@@ -9,12 +10,13 @@
   border-radius: 5px;
   padding-right: 40px;
 
-&__header{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
   h2 {
     font-size: 24px;
     margin-bottom: 20px;
@@ -22,7 +24,7 @@
     width: 85%;
   }
 
-  &__user-form{
+  &__user-form {
     display: flex;
     flex-direction: row;
   }
@@ -30,7 +32,7 @@
   form {
     display: flex;
     flex-direction: column;
-    
+
     .left-column {
       flex: 1;
       padding-right: 20px;
@@ -119,28 +121,26 @@
   }
 
   .button-group {
-    text-align: center; 
-display: flex;
+    text-align: center;
+    display: flex;
 
-    button {
-      padding: 10px 20px;
-      background-color: #158463;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
 
-      &:disabled {
-        background-color: #ccc;
-        cursor: not-allowed;
-      }
+  }
+
+  &-button {
+    padding: 10px 20px;
+    background-color: #158463;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
     }
   }
 }
-
-
-
-
-
-
