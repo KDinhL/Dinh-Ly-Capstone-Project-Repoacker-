@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { urlProjectTasks, urlAllProjects } from "../../utils/api-utils";
+import { useParams, Link } from "react-router-dom";
+import { urlProjectTasks, urlAllProjects, urlProjectById } from "../../utils/api-utils";
 import "./TaskList.scss";
 
-export default function TaskList() {
+export default function TaskList({ onProjectSelect, onTaskAdded, tasks, setTasks  }) {
   const { projectId } = useParams();
   const [projects, setProjects] = useState([]);
-  const [selectedProjectId, setSelectedProjectId] = useState(""); // Initialize with an empty string
-  const [tasks, setTasks] = useState([]);
-  const navigate = useNavigate();
+  const [selectedProjectId, setSelectedProjectId] = useState("");
+  // const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     fetchProjects();
@@ -17,9 +16,9 @@ export default function TaskList() {
 
   useEffect(() => {
     if (selectedProjectId) {
-      fetchTasks();
+      fetchTasks(selectedProjectId);
     } else {
-      setTasks([]); // Reset tasks when no project is selected
+      setTasks([]);
     }
   }, [selectedProjectId]);
 
@@ -33,9 +32,9 @@ export default function TaskList() {
     }
   };
 
-  const fetchTasks = async () => {
+  const fetchTasks = async (projectId) => {
     try {
-      const url = urlProjectTasks(selectedProjectId);
+      const url = urlProjectTasks(projectId);
       const response = await axios.get(url);
       setTasks(response.data);
     } catch (error) {
@@ -43,9 +42,31 @@ export default function TaskList() {
     }
   };
 
-  const handleProjectChange = (event) => {
+  const handleProjectChange = async (event) => {
     const selectedProjectId = event.target.value;
     setSelectedProjectId(selectedProjectId);
+  
+    let project_name, project_id, project_start_date, project_deadline;
+  
+    if (selectedProjectId) {
+      // Make an API call to get project_name using project.project_id
+      try {
+        const response = await fetch(urlProjectById(selectedProjectId));
+        if (response.ok) {
+          const data = await response.json();
+          project_name = data.project_name;
+          project_id = data.id;
+          project_start_date = data.project_start_date;
+          project_deadline = data.project_deadline;
+        } else {
+          console.error("Error fetching project details");
+        }
+      } catch (error) {
+        console.error("Error fetching project details:", error);
+      }
+    }
+  
+    onProjectSelect({ project_name, project_id, project_start_date, project_deadline }); 
   };
 
   return (
