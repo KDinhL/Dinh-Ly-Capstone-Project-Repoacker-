@@ -65,16 +65,10 @@ Post	Add new Task, Projects
 3.4 Authentication/Authorization and Security (TBD)
 
 4. Project Roadmap
-Phase 1
 1)	Basic: The basic function that this program will provide to user include:
 a.	Generate the work flow of the project by the open tasks, percent of completion in different period of time and track the deadline.
 b.	User submit the report of the tasks that they response and program will generate the final report based on user comments.
 c.	Alert the deadline of the report submission and the deadline of the tasks.
-
-
-
-
-
 
 
 
@@ -90,13 +84,11 @@ Milestones	Goal
 9	DEPLOYMENT
 10	DEMO DAY
 
-Phase 2
-Finish the rest of Diving Deeper: 
+the rest of Diving Deeper: 
 1)	Projects Calendar
 2)	Login/Page
-Phase 3
-Finish the rest of Diving Deeper: 
-1)	Multiple users
+3) Alert Page
+
 
 5. Demo Day Information
 Please fill out the Google Forms that will be sent out via Slack. This information will be used to complete your presentation and to showcase your profile on the BrainStation website.
