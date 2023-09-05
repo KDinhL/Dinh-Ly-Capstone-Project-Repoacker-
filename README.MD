@@ -84,13 +84,18 @@ Research is ongoing to determine the appropriate technology stack and APIs, part
 
 ## 4. Client-Side Implementation
 
-### 4.1 Site Map
-
-<!-- Include a visual site map if available -->
-
-### 4.2 Screen Details
-
-<!-- Provide details about the various screens and user interfaces -->
+![Dinh Kien Ly-Capstone Project Proposal-picture-01](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/9e6725a4-e121-4640-bd89-e489526ba786)
+![Dinh Kien Ly-Capstone Project Proposal-picture-02](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/ff181c60-9676-4fef-8178-0b9c19044c57)
+![Dinh Kien Ly-Capstone Project Proposal-picture-03](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/f4637c2f-1f3d-4c53-8a77-a0d6b41a0970)
+![Dinh Kien Ly-Capstone Project Proposal-picture-04](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/5df2d732-04b0-450e-8c69-33b00165a309)
+![Dinh Kien Ly-Capstone Project Proposal-picture-05](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/4cfa3e74-10eb-4862-af31-c18b8ca925dc)
+![Dinh Kien Ly-Capstone Project Proposal-picture-06](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/7f8cb4bc-5060-4f7a-a9ef-e88b05da1808)
+![Dinh Kien Ly-Capstone Project Proposal-picture-07](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/8e025462-eaae-4a7a-bfa0-62dabb506c90)
+![Dinh Kien Ly-Capstone Project Proposal-picture-08](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/8096df57-2959-40e3-a41c-39aa09380008)
+![Dinh Kien Ly-Capstone Project Proposal-picture-09](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/37a964ed-0500-4ede-8e08-5daa1d09bfba)
+![Dinh Kien Ly-Capstone Project Proposal-picture-10](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/0fb88903-99d3-40c9-aada-7a6c4359676a)
+![Dinh Kien Ly-Capstone Project Proposal-picture-11](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/85202772-4165-49bc-ad68-ce3c7321fa35)
+![Dinh Kien Ly-Capstone Project Proposal-picture-12](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/assets/135871528/d9507e64-a99b-4b0f-8bbd-6a334879625f)
 
 ## 5. Server-Side Implementation
 
