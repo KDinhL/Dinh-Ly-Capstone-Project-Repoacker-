@@ -22,12 +22,14 @@ exports.up = function (knex) {
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
         table.string('task_name').notNullable();
+        table.string('task_project_name').notNullable();
         table.string('task_description').notNullable();
         table.string('task_start_date').notNullable();
         table.string('task_deadline').notNullable();
         table.string('project_status').defaultTo('in-process');
         table.string('task_problem').notNullable();
         table.string('task_solution').notNullable();
+        table.integer('task_status_percentage').defaultTo(0);
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
     });

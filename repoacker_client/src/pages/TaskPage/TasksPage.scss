@@ -1,0 +1,30 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.tasks-page {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 150vh;
+  margin: 0;
+
+  &__column-PL {
+    width: 80%;
+    overflow: auto;
+    padding: 20px;
+    height: 50vh;
+    box-sizing: border-box;
+  }
+
+  &__column-TD {
+    width: 80%;
+    overflow: auto;
+    padding: 20px;
+    height:100vh;
+    box-sizing: border-box;
+  }
+}

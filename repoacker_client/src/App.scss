@@ -1,0 +1,11 @@
+@import './styles/partials/typography';
+@import './styles/partials/variables.scss';
+
+
+
+body {
+  display: block;
+  width: 100%;
+  background-color: $background-color-2;
+  margin: 0;
+}

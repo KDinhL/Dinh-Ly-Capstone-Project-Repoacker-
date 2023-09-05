@@ -1,0 +1,49 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.project-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 150vh;
+  align-items: center;
+
+  &__column-PL {
+    width: 90%;
+    overflow: auto;
+    padding: 20px;
+    height: 40vh; /* Updated height for the project list */
+    box-sizing: border-box;
+  }
+
+  &__column-P {
+    width: 80%;
+    overflow: auto;
+    padding: 20px;
+    height: 100vh; /* Updated height for the project detail */
+    box-sizing: border-box;
+  }
+
+  &__add-button {
+    margin-top: 20px;
+    height: 5vh; /* Updated height for the button section */
+    
+    button {
+      width: 100%;
+      height: 100%;
+      background-color: #158463;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

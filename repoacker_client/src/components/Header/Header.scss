@@ -1,0 +1,137 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.header {
+    width: 100%; 
+    margin: 0;
+  background-color: $background-color-1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px;
+
+  &__quote {
+    display: block;
+    width: 100%;
+    flex-shrink: 1;
+    flex-grow: 3;
+    order: 1;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+
+    &__user-icon {
+      p {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+      }
+    }
+
+    @include mobile {
+      margin-top: 16px;
+    }
+
+    @include tablet {
+      margin: 0 24px;
+      font-size: 1.75rem;
+      line-height: 2rem;
+    }
+
+    @include desktop {
+      display: flex;
+      width: fit-content;
+      flex-grow: 2;
+      order: 2;
+      margin: 0;
+      font-size: 1.75rem;
+      line-height: 2rem;
+    }
+  }
+
+  &__logo-user-icon {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    display: flex;
+    width: 20%;
+    flex-grow: 1;
+    order: 2;
+    justify-content: flex-start;
+    flex-shrink: 2;
+
+    @include desktop {
+        justify-content: flex-end;
+
+    }
+
+    &-image {
+      max-height: 144px;
+      @include mobile {
+      margin-right: 16px;
+      }
+      @include tablet {
+        margin-right: 24px;
+        }
+    }
+
+    @include desktop {
+      flex-grow: 1;
+      order: 1;
+      width: fit-content;
+
+    }
+  }
+
+  &__user-icon {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    flex-grow: 3;
+    order: 3;
+    justify-content: flex-end;
+
+    p {
+      line-height: 1.5rem;
+      font-size: 1rem;
+    }
+
+    flex-shrink: 2;
+
+    &--image {
+      height: 50px;
+      margin: 0 16px;
+
+      @include mobile {
+        p {
+          font-size: 1.25rem;
+          line-height: 1.5rem;
+        }
+      }
+    }
+
+    @include desktop {
+      flex-grow: 1;
+      order: 3;
+        justify-content: flex-start;
+
+    
+    }
+  }
+
+  @include tablet {
+    padding: 24px 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include desktop {
+    padding: 24px 0;
+  }
+}

@@ -1,0 +1,54 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.ProjectDetails {
+  width: 90%; /* Set the overall width to 90% */
+  margin: 0 auto; /* Center the component horizontally */
+
+  &__info {
+    margin-bottom: 20px; /* Add some space below the info section */
+  }
+
+  &__chart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    width: 80%;
+
+    /* Apply responsive styles using mixins */
+    @include tablet {
+      flex-direction: column;
+    }
+  }
+
+  &__chart-row {
+    display: flex;
+    justify-content: space-between;
+
+    /* Apply responsive styles using mixins */
+    @include tablet {
+      flex-direction: column;
+    }
+  }
+&__tasks{
+    ul {
+        list-style-type: none; // Remove default bullet points
+        counter-reset: taskCounter; // Reset the counter for tasks
+        padding-left: 0; // Remove any default left padding
+      }
+    
+      li {
+        position: relative;
+        margin-bottom: 10px;
+    
+        a::before {
+          content: counter(taskCounter) ") ";
+          counter-increment: taskCounter;
+          position: absolute;
+          left: -20px;
+        }
+      }
+    }
+}

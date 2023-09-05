@@ -1,0 +1,110 @@
+@import './_fonts.scss';
+@import './_mixins.scss';
+@import './_variables.scss';
+
+body {
+    font-family: 'TitlliumWeb';
+    
+    /* Heading Styles */
+    h1, .header {
+        font-weight: '600';
+        font-size: 1.75rem;
+        line-height: 2.25rem;
+    }
+    h2, .sub-header {
+        font-weight: '600';
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+    h3, a, .label, .link, .button {
+        font-weight: '600';
+        font-size: 0.813rem;
+        line-height: 1rem;
+    }
+    h4, .table-header {
+        font-weight: '400';
+        font-size: 0.688rem;
+        line-height: 1rem;
+    }
+    
+    /* Body Paragraph Styles */
+    p.body-large, p.body-medium, p.body-small, .status {
+        font-weight: '400';
+    }
+    p.body-large {
+        font-size: 0.938rem;
+        line-height: 1.625rem;
+    }
+    p.body-medium {
+        font-size: 0.813rem;
+        line-height: 1.25rem; 
+    }
+    p.body-small {
+        font-size: 0.688rem;
+        line-height: 1rem; 
+    }
+    
+    /* Tablet View Styles */
+    @include tablet {
+        h1, .header {
+            font-size: 2rem;
+            line-height: 2.5rem;
+        }
+        h2, .sub-header {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+        h3, a, .label, .link, .button {
+            font-size: 0.875rem;
+            line-height: 1.375rem;
+        }
+        h4, .table-header {
+            font-size: 0.75rem;
+            line-height: 1.125rem;
+        }
+        p.body-large {
+            font-size: 1rem;
+            line-height: 1.75rem;
+        }
+        p.body-medium {
+            font-size: 0.875rem;
+            line-height: 1.375rem; 
+        }
+        p.body-small {
+            font-size: 0.75rem;
+            line-height: 1.125rem; 
+        }
+    }
+    
+    /* Desktop View Styles */
+    @include desktop {
+        h1, .header {
+            font-size: 2rem;
+            line-height: 2.5rem;
+        }
+        h2, .sub-header {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+        h3, a, .label, .link, .button {
+            font-size: 0.875rem;
+            line-height: 1.375rem;
+        }
+        h4, .table-header {
+            font-size: 0.75rem;
+            line-height: 1.125rem;
+        }
+        p.body-large {
+            font-size: 1rem;
+            line-height: 1.75rem;
+        }
+        p.body-medium {
+            font-size: 0.875rem;
+            line-height: 1.375rem; 
+        }
+        p.body-small {
+            font-size: 0.75rem;
+            line-height: 1.125rem; 
+        }
+    }
+}
