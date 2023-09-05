@@ -75,7 +75,6 @@ const updateTask = (req, res) => {
   const requiredUpdateProperties = [
     "project_id",
     "task_name",
-    "task_project_name",
     "task_description",
     "task_start_date",
     "task_deadline",

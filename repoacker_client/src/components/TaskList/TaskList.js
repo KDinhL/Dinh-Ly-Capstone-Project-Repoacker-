@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { urlProjectTasks, urlAllProjects, urlProjectById, urlTaskById } from "../../utils/api-utils";
-import "./TaskList.scss";
+import {
+  urlProjectTasks,
+  urlAllProjects,
+  urlProjectById,
+  urlTaskById,
+} from "../../utils/api-utils"; import "./TaskList.scss";
 import DeleteTask from "../DeleteTask/DeleteTask"; // Import the DeleteTask component
+import EditTask from "../EditTask/EditTask"; // Import the EditTask component
 
-export default function TaskList({ onProjectSelect, tasks, setTasks  }) {
+export default function TaskList({ onEdit, onProjectSelect, tasks, setTasks }) {
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState("");
 
@@ -19,7 +24,7 @@ export default function TaskList({ onProjectSelect, tasks, setTasks  }) {
     } else {
       setTasks([]);
     }
-  }, [selectedProjectId, tasks]);
+  }, [selectedProjectId]);
 
   const fetchProjects = async () => {
     try {
@@ -44,9 +49,9 @@ export default function TaskList({ onProjectSelect, tasks, setTasks  }) {
   const handleProjectChange = async (event) => {
     const selectedProjectId = event.target.value;
     setSelectedProjectId(selectedProjectId);
-  
+
     let project_name, project_id, project_start_date, project_deadline;
-  
+
     if (selectedProjectId) {
       try {
         const response = await fetch(urlProjectById(selectedProjectId));
@@ -63,17 +68,30 @@ export default function TaskList({ onProjectSelect, tasks, setTasks  }) {
         console.error("Error fetching project details:", error);
       }
     }
-  
-    onProjectSelect({ project_name, project_id, project_start_date, project_deadline }); 
+
+    onProjectSelect({ project_name, project_id, project_start_date, project_deadline });
   };
 
   const handleTaskDelete = async (taskId) => {
     try {
       await axios.delete(urlTaskById(taskId));
       // Remove the deleted task from the tasks state
-      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+      setTasks((prevTasks) =>
+        prevTasks.filter((task) => task.id !== taskId));
+
     } catch (error) {
       console.error("Error deleting task:", error);
+    }
+  };
+  const handleProjectEdit = async () => {
+    try {
+      await fetchProjects(); // Fetch the updated project list
+      // Fetch the updated tasks for the selected project (if selectedProjectId is set)
+      if (selectedProjectId) {
+        await fetchTasks(selectedProjectId);
+      }
+    } catch (error) {
+      console.error("Error editing project:", error);
     }
   };
 
@@ -129,6 +147,11 @@ export default function TaskList({ onProjectSelect, tasks, setTasks  }) {
                   <DeleteTask
                     taskId={task.id}
                     onDelete={() => handleTaskDelete(task.id)}
+                  />
+                  <EditTask
+                    taskId={task.id}
+                    projectId={selectedProjectId}
+                    onEdit={handleProjectEdit}
                   />
                 </td>
               </tr>
