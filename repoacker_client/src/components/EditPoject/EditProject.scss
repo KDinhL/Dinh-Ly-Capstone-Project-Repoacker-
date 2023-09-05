@@ -21,14 +21,30 @@
   padding: 20px;
   z-index: 1001;
   border-radius: 5px;
-  width: 60%; /* Set the width to 60% of the screen size */
-
-  h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+  width: 60%;
+}
+.edit-project {
+  max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-right: 40px;
+    background-color: $primary-color-3;
+    
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      width: 85%;
   }
 
   form {
+    display: flex;
+    flex-direction: column;
+
     .input-group {
       margin-bottom: 20px;
 
@@ -71,18 +87,24 @@
 
     .button-group {
       text-align: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
 
       button {
         padding: 10px 20px;
-        background-color: #007bff;
+        background-color: #158463;
         color: #fff;
         border: none;
         border-radius: 5px;
         font-size: 16px;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:hover {
-          background-color: #0056b3;
+          background-color: #ccc;
         }
       }
 

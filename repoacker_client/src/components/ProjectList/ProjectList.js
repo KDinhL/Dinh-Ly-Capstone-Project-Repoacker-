@@ -6,8 +6,6 @@ import "./ProjectList.scss";
 import DeleteProject from "../DeleteProject/DeleteProject";
 import "../DeleteProject/DeleteProject.scss";
 import EditProject from "../EditPoject/EditProject";
-import Modal from "react-modal";
-
 export default function ProjectList({ onProjectClick }) {
   const [projects, setProjects] = useState([]);
 
@@ -31,6 +29,9 @@ export default function ProjectList({ onProjectClick }) {
   const handleProjectEdit = () => {
     fetchProjects();
   };
+
+   
+
 
   return (
     <div className="PL">
@@ -73,7 +74,11 @@ export default function ProjectList({ onProjectClick }) {
               <td>
                 {project.remaining_days < 0 ? "Over Due" : project.remaining_days}
               </td>
-              <td>{project.project_status_percentage}</td>
+              <td>
+                {isNaN(Number(project.project_status_percentage))
+                  ? project.project_status_percentage
+                  : `${project.project_status_percentage}%`}
+              </td>
               <td>
                 <DeleteProject
                   projectId={project.project_id}

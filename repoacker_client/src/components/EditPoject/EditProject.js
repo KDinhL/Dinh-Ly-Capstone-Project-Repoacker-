@@ -90,7 +90,7 @@ export default function EditProject({ projectId, onEdit }) {
   };
 
   return (
-    <div className="edit-project">
+    <div>
       {isEditing ? (
         <Modal
           isOpen={isEditing}
@@ -98,7 +98,8 @@ export default function EditProject({ projectId, onEdit }) {
           contentLabel="Edit Project Modal"
           className="modal-content"
           overlayClassName="modal-overlay"
-        >
+        >    <div className="edit-project">
+
           <h2>Edit Project</h2>
           <form onSubmit={handleSaveClick}>
             <div className="input-group">
@@ -163,6 +164,7 @@ export default function EditProject({ projectId, onEdit }) {
               </button>
             </div>
           </form>
+          </div>
         </Modal>
       ) : (
         <button className="edit-button" onClick={handleEditClick}>

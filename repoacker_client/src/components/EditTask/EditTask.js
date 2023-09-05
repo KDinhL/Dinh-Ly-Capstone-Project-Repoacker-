@@ -130,7 +130,7 @@ export default function EditTask({ taskId, projectId, onEdit, project_start_date
                     isOpen={isEditing}
                     onRequestClose={handleCancelClick}
                     contentLabel="Edit Task Modal"
-                    className="modal-content"
+                    className="edit-task"
                     overlayClassName="modal-overlay"
                 ><div className="edit-task"
 >

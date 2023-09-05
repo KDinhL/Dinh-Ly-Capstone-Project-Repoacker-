@@ -86,10 +86,10 @@ export default function TaskList({ onEdit, onProjectSelect, tasks, setTasks }) {
   const handleProjectEdit = async () => {
     try {
       await fetchProjects(); // Fetch the updated project list
-      // Fetch the updated tasks for the selected project (if selectedProjectId is set)
       if (selectedProjectId) {
         await fetchTasks(selectedProjectId);
       }
+      onEdit(); // Call the callback function to trigger any necessary updates
     } catch (error) {
       console.error("Error editing project:", error);
     }
