@@ -63,6 +63,9 @@ export default function TasksPage() {
           onTaskAdded={handleTaskAdded}
           tasks={tasks}
           setTasks={setTasks}
+          task_project_name={selectedProject ? selectedProject.project_name : ""}
+          project_start_date={selectedProject ? selectedProject.project_start_date : ""}
+          project_deadline={selectedProject ? selectedProject.project_deadline : ""}
         />
       </div>
       <button className="add-task-button" onClick={openModal}>

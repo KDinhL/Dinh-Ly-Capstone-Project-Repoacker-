@@ -10,7 +10,7 @@ import {
 import DeleteTask from "../DeleteTask/DeleteTask"; // Import the DeleteTask component
 import EditTask from "../EditTask/EditTask"; // Import the EditTask component
 
-export default function TaskList({ onEdit, onProjectSelect, tasks, setTasks }) {
+export default function TaskList({ project_deadline ,project_start_date ,onEdit, onProjectSelect, tasks, setTasks }) {
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState("");
 
@@ -152,6 +152,8 @@ export default function TaskList({ onEdit, onProjectSelect, tasks, setTasks }) {
                     taskId={task.id}
                     projectId={selectedProjectId}
                     onEdit={handleProjectEdit}
+                    project_start_date={project_start_date}
+                    project_deadline={project_deadline}
                   />
                 </td>
               </tr>

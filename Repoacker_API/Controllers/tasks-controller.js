@@ -209,7 +209,8 @@ const createTask = (req, res) => {
         .then((createdTask) => {
           res.status(201).json(createdTask[0]);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log('new task error: ', error)
           res.status(500).json({
             message: `Unable to create new task`,
           });
