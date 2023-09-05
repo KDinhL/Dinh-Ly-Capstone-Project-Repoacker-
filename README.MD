@@ -135,4 +135,5 @@ Security measures will be implemented as needed.
 
 ## 7. Demo Day Information
 
-Please fill out the Google Forms sent via Slack. This information will be used for your presentation and profile on the BrainStation website.
+Please review the pdf for image.
+[Dinh Kien Ly-Capstone Project Proposal.pdf](https://github.com/KDinhL/Dinh-Ly-Capstone-Project-Repoacker-/files/12529228/Dinh.Kien.Ly-Capstone.Project.Proposal.pdf)
