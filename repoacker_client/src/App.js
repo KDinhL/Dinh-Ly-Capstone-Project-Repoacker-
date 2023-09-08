@@ -13,13 +13,15 @@ import AllReportPage from "./pages/AllReportPage/AllReportPage";
 import AddProject from "./components/AddProject/AddProject";
 import EditProject from "./components/EditPoject/EditProject";
 import AddTask from "./components/AddTask/AddTask";
-
+import Footer from "./components/Footer/Footer"
+import Login from "./components/Auth/Login"
 function App() {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<Login />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/projects" element={<ProjectsPage />}>
           <Route path="/projects/:projectId" element={<ProjectDetails />} />
           <Route path="add" element={<AddProject />} />
@@ -35,6 +37,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

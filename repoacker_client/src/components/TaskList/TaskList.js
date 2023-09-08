@@ -13,6 +13,7 @@ import EditTask from "../EditTask/EditTask"; // Import the EditTask component
 export default function TaskList({ project_deadline ,project_start_date ,onEdit, onProjectSelect, tasks, setTasks }) {
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState("");
+  const [taskListKey, setTaskListKey] = useState(0); // Add a key to force re-render
 
   useEffect(() => {
     fetchProjects();
@@ -75,14 +76,18 @@ export default function TaskList({ project_deadline ,project_start_date ,onEdit,
   const handleTaskDelete = async (taskId) => {
     try {
       await axios.delete(urlTaskById(taskId));
+      console.log("Task deleted successfully"); // Check if this log appears
       // Remove the deleted task from the tasks state
       setTasks((prevTasks) =>
         prevTasks.filter((task) => task.id !== taskId));
+        setTaskListKey(taskListKey + 1);
 
     } catch (error) {
       console.error("Error deleting task:", error);
     }
   };
+
+
   const handleProjectEdit = async () => {
     try {
       await fetchProjects(); // Fetch the updated project list
