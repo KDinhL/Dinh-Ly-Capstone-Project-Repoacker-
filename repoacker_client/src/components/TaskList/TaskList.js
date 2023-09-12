@@ -73,19 +73,23 @@ export default function TaskList({ project_deadline ,project_start_date ,onEdit,
     onProjectSelect({ project_name, project_id, project_start_date, project_deadline });
   };
 
-  const handleTaskDelete = async (taskId) => {
-    try {
-      await axios.delete(urlTaskById(taskId));
-      console.log("Task deleted successfully"); // Check if this log appears
-      // Remove the deleted task from the tasks state
-      setTasks((prevTasks) =>
-        prevTasks.filter((task) => task.id !== taskId));
+const handleTaskDelete = (taskId) => {
+  axios
+    .delete(urlTaskById(taskId))
+    .then((response) => {
+      if (response.status === 204) {
+        // Remove the deleted task from the tasks list
+        setTasks((prevTasks) =>
+          prevTasks.filter((task) => task.id !== taskId)
+        );
+        // Force a re-render if necessary (you may not need this)
         setTaskListKey(taskListKey + 1);
-
-    } catch (error) {
+      }
+    })
+    .catch((error) => {
       console.error("Error deleting task:", error);
-    }
-  };
+    });
+};
 
 
   const handleProjectEdit = async () => {
@@ -151,8 +155,8 @@ export default function TaskList({ project_deadline ,project_start_date ,onEdit,
                 <td>
                   <DeleteTask
                     taskId={task.id}
-                    onDelete={() => handleTaskDelete(task.id)}
-                  />
+                    onDelete={handleTaskDelete}
+                    />
                   <EditTask
                     taskId={task.id}
                     projectId={selectedProjectId}
