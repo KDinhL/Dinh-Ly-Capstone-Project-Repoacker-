@@ -6,7 +6,8 @@ import {
   urlAllProjects,
   urlProjectById,
   urlTaskById,
-} from "../../utils/api-utils"; import "./TaskList.scss";
+} from "../../utils/api-utils"; 
+import "./TaskList.scss";
 import DeleteTask from "../DeleteTask/DeleteTask"; // Import the DeleteTask component
 import EditTask from "../EditTask/EditTask"; // Import the EditTask component
 

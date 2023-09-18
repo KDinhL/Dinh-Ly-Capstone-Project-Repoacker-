@@ -14,15 +14,19 @@
       border: 1px solid black;
       padding: 8px;
       text-align: center;
+      background-color: $primary-color-3;
+
 
       &:last-child {
         width: fit-content;
         align-items: center;
+        background-color: $primary-color-3;
+
       }
     }
 
     th {
-      background-color: $background-color-2;
+      background-color: $primary-color-3;
     }
   }
 }
