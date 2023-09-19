@@ -1,0 +1,34 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.TL {
+  text-align: center;
+
+  &__project-selection {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: $primary-color-3;
+
+  }
+
+  &__task-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+
+    th,
+    td {
+      border: 1px solid $border-color;
+      padding: 8px;
+      background-color: $primary-color-3;
+
+    }
+
+    th {
+      background-color: $primary-color-3;
+      font-weight: bold;
+    }
+  }
+}

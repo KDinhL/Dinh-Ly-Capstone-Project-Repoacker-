@@ -1,0 +1,167 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+
+.modal-content {
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    z-index: 1001;
+    border-radius: 5px;
+    width: 60%;
+}
+.edit-task {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-right: 40px;
+    background-color: $primary-color-3;
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        display: flex;
+        width: 85%;
+    }
+
+    &__user-form {
+        display: flex;
+        flex-direction: row;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        .left-column {
+            flex: 1;
+            padding-right: 20px;
+
+            .input-group {
+                margin-bottom: 20px;
+
+                label {
+                    display: block;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+
+                input[type="text"],
+                textarea {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 16px;
+                }
+
+                textarea {
+                    min-height: 100px;
+                    resize: vertical;
+                }
+
+                .error-message {
+                    color: #f00;
+                    font-size: 14px;
+                    margin-top: 5px;
+                }
+            }
+        }
+
+        .right-column {
+            flex: 1;
+            padding-left: 20px;
+
+            .input-group {
+                margin-bottom: 20px;
+
+                label {
+                    display: block;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+
+                input[type="date"],
+                input[type="number"],
+                textarea {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 16px;
+                }
+
+                textarea {
+                    min-height: 100px;
+                    resize: vertical;
+                }
+
+                .error-message {
+                    color: #f00;
+                    font-size: 14px;
+                    margin-top: 5px;
+                }
+            }
+
+            .input-group-row {
+                display: flex;
+                flex-direction: row;
+
+                .input-group-left {
+                    flex: 1;
+                    padding-right: 10px;
+                }
+
+                .input-group-right {
+                    flex: 1;
+                    padding-left: 10px;
+                }
+            }
+        }
+    }
+
+    .button-group {
+        text-align: center;
+        display: flex;
+        justify-content: space-evenly;
+        padding: 10px 20px;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+
+
+    }
+
+    &-button {
+        padding: 10px 20px;
+        background-color: #158463;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+}

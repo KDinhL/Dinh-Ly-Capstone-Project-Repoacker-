@@ -1,0 +1,85 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.delete-task {
+    position: relative;
+  
+    .delete-task-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+  
+      img {
+        width: 24px;
+        height: 24px;
+        fill: $primary-color-1; // Use the appropriate color variable
+      }
+    }
+  
+    // Modal styles
+    .modal {
+      background: $primary-color-1;
+      border-radius: 8px;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+  
+      h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: $primary-color-3;
+      }
+  
+      p {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: $primary-color-3;
+      }
+  
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+  
+        .confirm-delete-button,
+        .cancel-delete-button {
+          background: $primary-color-1;
+          color: $primary-color-3;
+          border: none;
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+          border-radius: 4px;
+          margin: 5px;
+  
+          &.confirm-delete-button {
+            background: $supporting-color-1;
+          }
+  
+          &.cancel-delete-button {
+            background: $supporting-color-2;
+          }
+        }
+      }
+    }
+  
+    // Overlay styles
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+  }

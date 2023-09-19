@@ -1,10 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom/client"; // Import createRoot from "react-dom/client"
+import App from "./App";
+import Modal from "react-modal";
 
-// import reportWebVitals from './reportWebVitals';
+// Set the App element globally
+Modal.setAppElement("#root");
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
     <App />

@@ -1,0 +1,39 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.TaskDetails {
+  background-color: $background-color-2;
+  padding: 20px;
+
+  &__content {
+    width: 80%;
+    margin: 0 auto;
+
+    &__row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+
+      h1 {
+        flex: 1;
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      input,
+      textarea {
+        flex: 2;
+        padding: 5px;
+        border: 1px solid $border-color;
+        background-color: $background-color-1;
+      }
+    }
+  }
+
+  textarea {
+    width: 100%;
+    height: 150px;
+  }
+}

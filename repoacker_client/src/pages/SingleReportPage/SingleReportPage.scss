@@ -1,0 +1,96 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.single-report-page {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+
+  .project-list{
+    display: flex;
+    width: 80vw;
+
+  }
+  .task-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+
+    h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .task-table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+
+      th,
+      td {
+        border: 1px solid $border-color;
+        padding: 8px;
+      }
+
+      th {
+        background-color: $background-color-2;
+        font-weight: bold;
+      }
+
+      td {
+        a {
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .task-details {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    h2 {
+      font-size: 20px;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .task-details-row {
+      width: 40%;
+      margin-bottom: 10px;
+
+      h3 {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 5px 0;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid $border-color;
+        background-color: $primary-color-3;
+      }
+
+      textarea {
+        height: auto; 
+        min-height: 80px; 
+        max-height: 200px; 
+        overflow-y: auto; 
+      }
+    }
+  }
+}
