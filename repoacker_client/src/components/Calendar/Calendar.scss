@@ -3,6 +3,9 @@
 @import '../../styles/partials/variables.scss';
 
 .calendar {
+    width: 80%;
+    margin: auto;
+    background-color: $primary-color-3;
   &__modal {
     background-color: $primary-color-1;
     border-radius: 8px;
