@@ -8,15 +8,20 @@ import Modal from "react-modal";
 function DeleteTask({ taskId, onDelete }) {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const handleDelete = async () => {
-    try {
-      await axios.delete(urlTaskById(taskId));
-      onDelete(); // Trigger the onDelete callback to update the task list
-      setShowConfirmation(false);
-    } catch (error) {
-      console.error("Error deleting task:", error);
-      setShowConfirmation(false);
-    }
+  const handleDelete = () => {
+    axios
+      .delete(urlTaskById(taskId))
+      .then((response) => {
+        if (response.status === 204) {
+
+          onDelete();
+          setShowConfirmation(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting project:", error);
+        setShowConfirmation(false);
+      });
   };
 
   const handleCancelDelete = () => {
@@ -42,7 +47,7 @@ function DeleteTask({ taskId, onDelete }) {
         <h2>Confirm Deletion</h2>
         <p>Are you sure you want to delete this task?</p>
         <div className="button-container">
-          <button className="confirm-delete-button" onClick={handleDelete}>
+          <button className="confirm-delete-button" onClick={() => onDelete(taskId)}>
             Yes, Delete
           </button>
           <button className="cancel-delete-button" onClick={handleCancelDelete}>

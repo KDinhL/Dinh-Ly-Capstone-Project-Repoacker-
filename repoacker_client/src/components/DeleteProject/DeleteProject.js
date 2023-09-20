@@ -13,19 +13,19 @@ function DeleteProject({ projectId, onDelete }) {
       .delete(urlProjectById(projectId))
       .then((response) => {
         if (response.status === 204) {
-     
+
           onDelete();
-          setShowConfirmation(false); 
+          setShowConfirmation(false);
         }
       })
       .catch((error) => {
         console.error("Error deleting project:", error);
-        setShowConfirmation(false); 
+        setShowConfirmation(false);
       });
   };
 
   const handleCancelDelete = () => {
-    setShowConfirmation(false); 
+    setShowConfirmation(false);
   };
 
   return (
@@ -41,7 +41,7 @@ function DeleteProject({ projectId, onDelete }) {
         isOpen={showConfirmation}
         onRequestClose={() => setShowConfirmation(false)}
         className="modal"
-        overlayClassName="modal-overlay"
+        overlayClassName="modal-overlay-delete"
         ariaHideApp={false}
       >
         <h2>Confirm Deletion</h2>

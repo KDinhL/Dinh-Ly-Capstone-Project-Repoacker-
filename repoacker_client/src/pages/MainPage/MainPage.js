@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import User from "../../assets/images/user.png";
 import { urlAllProjects } from "../../utils/api-utils";
 import "./MainPage.scss";
+import Calendar from "../../components/Calendar/Calendar";
 
 export default function MainPage() {
     const [showAdditionalButtons, setShowAdditionalButtons] = useState(false);
@@ -34,6 +35,12 @@ export default function MainPage() {
 
     const toggleAdditionalButtons = () => {
         setShowAdditionalButtons(!showAdditionalButtons);
+    };
+
+
+    const handleDisplayCalendar = () => {
+        setDisplayAllProjects(true);
+        navigate("/calendar"); // Navigate to the AllReportPage.js
     };
 
     const handleProjectSelect = (event) => {
@@ -71,7 +78,7 @@ export default function MainPage() {
                 <button className="page-button">
                     <Link to="/tasks">Tasks</Link>
                 </button>
-                <button className="page-button" onClick={toggleAdditionalButtons}>
+                <button className="page-button" onClick={handleDisplayCalendar}>
                     Alerts
                 </button>
             </section>

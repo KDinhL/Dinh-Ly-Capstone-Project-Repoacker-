@@ -6,13 +6,15 @@ import {
   urlAllProjects,
   urlProjectById,
   urlTaskById,
-} from "../../utils/api-utils"; import "./TaskList.scss";
+} from "../../utils/api-utils"; 
+import "./TaskList.scss";
 import DeleteTask from "../DeleteTask/DeleteTask"; // Import the DeleteTask component
 import EditTask from "../EditTask/EditTask"; // Import the EditTask component
 
 export default function TaskList({ project_deadline ,project_start_date ,onEdit, onProjectSelect, tasks, setTasks }) {
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState("");
+  const [taskListKey, setTaskListKey] = useState(0); // Add a key to force re-render
 
   useEffect(() => {
     fetchProjects();
@@ -72,17 +74,25 @@ export default function TaskList({ project_deadline ,project_start_date ,onEdit,
     onProjectSelect({ project_name, project_id, project_start_date, project_deadline });
   };
 
-  const handleTaskDelete = async (taskId) => {
-    try {
-      await axios.delete(urlTaskById(taskId));
-      // Remove the deleted task from the tasks state
-      setTasks((prevTasks) =>
-        prevTasks.filter((task) => task.id !== taskId));
-
-    } catch (error) {
+const handleTaskDelete = (taskId) => {
+  axios
+    .delete(urlTaskById(taskId))
+    .then((response) => {
+      if (response.status === 204) {
+        // Remove the deleted task from the tasks list
+        setTasks((prevTasks) =>
+          prevTasks.filter((task) => task.id !== taskId)
+        );
+        // Force a re-render if necessary (you may not need this)
+        setTaskListKey(taskListKey + 1);
+      }
+    })
+    .catch((error) => {
       console.error("Error deleting task:", error);
-    }
-  };
+    });
+};
+
+
   const handleProjectEdit = async () => {
     try {
       await fetchProjects(); // Fetch the updated project list
@@ -146,8 +156,8 @@ export default function TaskList({ project_deadline ,project_start_date ,onEdit,
                 <td>
                   <DeleteTask
                     taskId={task.id}
-                    onDelete={() => handleTaskDelete(task.id)}
-                  />
+                    onDelete={handleTaskDelete}
+                    />
                   <EditTask
                     taskId={task.id}
                     projectId={selectedProjectId}

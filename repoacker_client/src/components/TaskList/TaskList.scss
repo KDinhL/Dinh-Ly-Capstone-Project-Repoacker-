@@ -9,6 +9,8 @@
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: bold;
+    background-color: $primary-color-3;
+
   }
 
   &__task-table {
@@ -20,10 +22,12 @@
     td {
       border: 1px solid $border-color;
       padding: 8px;
+      background-color: $primary-color-3;
+
     }
 
     th {
-      background-color: $background-color-2;
+      background-color: $primary-color-3;
       font-weight: bold;
     }
   }

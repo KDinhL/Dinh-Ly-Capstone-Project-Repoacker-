@@ -11,7 +11,7 @@ export default function Header() {
                 <p>"Turning complexity into simplicity, where reporting has never been that easy."</p>
             </div>
             <div className="header__logo">
-            <Link to="/" className="header__logo-link">
+            <Link to="/main" className="header__logo-link">
                 <img className="header__logo-image" src={Logo} alt="Logo" />
            </Link>
             </div>

@@ -1,0 +1,158 @@
+@import '../../styles/partials/typography';
+@import '../../styles/partials/mixins.scss';
+@import '../../styles/partials/variables.scss';
+
+.calendar {
+    width: 80%;
+    margin: auto;
+    background-color: $primary-color-3;
+  &__modal {
+    background-color: $primary-color-1;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: $primary-color-3;
+      width: 85%; /* Example added width */
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: $primary-color-3;
+    }
+
+    &-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .calendar__cancel-button {
+        background: $supporting-color-2;
+        color: $primary-color-3;
+      }
+
+      .calendar__confirm-button {
+        background: $supporting-color-1;
+        color: $primary-color-3;
+      }
+
+      button {
+        background: $primary-color-1;
+        color: $primary-color-3;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin: 5px;
+        width: 100%; /* Example added width */
+      }
+    }
+  }
+
+  &__calendar {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  &__time-selection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    label {
+      margin-right: 10px;
+      color: $primary-color-3;
+    }
+
+    select,
+    input {
+      padding: 10px;
+      border: 1px solid $primary-color-3;
+      border-radius: 4px;
+      flex-grow: 1;
+    }
+  }
+
+  &__task-selection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    label {
+      margin-right: 10px;
+      color: $primary-color-3;
+    }
+
+    select {
+      padding: 10px;
+      border: 1px solid $primary-color-3;
+      border-radius: 4px;
+      flex-grow: 1;
+      width: 100%; /* Example added width */
+    }
+  }
+
+  &__confirm-button {
+    padding: 10px 20px;
+    background-color: $supporting-color-1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Example added width */
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  &__cancel-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: $supporting-color-2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Example added width */
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
