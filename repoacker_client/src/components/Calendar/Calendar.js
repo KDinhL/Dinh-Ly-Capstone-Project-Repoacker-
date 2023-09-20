@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction'; // Import the interaction plugin
+import interactionPlugin from '@fullcalendar/interaction';
 import Modal from 'react-modal';
 import './Calendar.scss';
-import { urlAllTasks } from '../../utils/api-utils'; // Import urlAllTasks function
+import { urlAllTasks } from '../../utils/api-utils';
 
 function Calendar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,8 +14,10 @@ function Calendar() {
   const [selectedHour, setSelectedHour] = useState('12');
   const [selectedMinute, setSelectedMinute] = useState('00');
   const [selectedAmPm, setSelectedAmPm] = useState('AM');
-  const [selectedTaskName, setSelectedTaskName] = useState(''); // New state variable
-
+  const [selectedTaskName, setSelectedTaskName] = useState('');
+  const [calendarEvents, setCalendarEvents] = useState([]);
+  const selectedTaskId = parseInt(selectedTask, 10);
+  const selectedTaskObject = tasks.find((task) => task.task_id === selectedTaskId);
   const openModal = (date) => {
     setSelectedDate(date);
     setIsModalOpen(true);
@@ -31,18 +33,43 @@ function Calendar() {
   };
 
   const handleDateClick = (dateClickInfo) => {
-    openModal(dateClickInfo.date); // Open modal on date click
+    openModal(dateClickInfo.date);
   };
 
-  const handleConfirmClick = () => {
-    console.log('Confirm button clicked');
-    setSelectedTaskName(selectedTask); // Add this line
-    console.log('Selected Task Name:', selectedTask); // Add this line
-    closeModal();
-  };
+ const handleConfirmClick = () => {
+  console.log('Confirm button clicked');
+  console.log('Selected Task:', selectedTask);
+
+  if (selectedTask) {
+    const selectedTaskId = parseInt(selectedTask, 10);
+    const selectedTaskObject = tasks.find((task) => task.task_id === selectedTaskId);
+    
+    if (selectedTaskObject) {
+      // Create a new Date object for the selected time
+      const selectedTime = new Date(selectedDate);
+      selectedTime.setHours(selectedAmPm === 'PM' ? parseInt(selectedHour, 10) + 12 : parseInt(selectedHour, 10));
+      selectedTime.setMinutes(parseInt(selectedMinute, 10));
+
+      // Format the time as HH:MM AM/PM
+      const formattedTime = selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const eventTitle = `${selectedTaskObject.task_name} at ${formattedTime}`;
+      const newEvent = {
+        title: eventTitle,
+        date: selectedTime.toISOString(),
+      };
+      
+      setCalendarEvents([...calendarEvents, newEvent]);
+      closeModal();
+    } else {
+      console.error('Selected task not found in tasks list.');
+    }
+  } else {
+    alert('Please select a task before confirming.');
+  }
+};
 
   useEffect(() => {
-    // Fetch tasks from your API when the component mounts
     async function fetchTasks() {
       try {
         const response = await fetch(urlAllTasks());
@@ -62,19 +89,13 @@ function Calendar() {
 
   return (
     <div className={`calendar`}>
-    <FullCalendar
-      plugins={[dayGridPlugin, interactionPlugin]}
-      initialView="dayGridMonth"
-      events={[
-        {
-            title: tasks.find(task => task.task_id === selectedTask)?.task_name || '', // Use the selected task name as the event title
-            date: selectedDate?.toISOString(),
-        },
-      ]}
-      dateClick={handleDateClick}
-    />
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        events={calendarEvents}
+        dateClick={handleDateClick}
+      />
 
-      {/* Modal for time and task selection */}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
@@ -83,11 +104,9 @@ function Calendar() {
         className="calendar__modal"
         overlayClassName="calendar__modal-overlay"
       >
-        {/* Content for your modal */}
         {selectedDate && (
           <div>
             <h2>Select Time and Task for {selectedDate.toDateString()}</h2>
-            {/* Add your time and task selection controls here */}
             <div className="calendar__time-selection">
               <label htmlFor="hour">Hour:</label>
               <select
@@ -123,7 +142,7 @@ function Calendar() {
                 <option value="PM">PM</option>
               </select>
             </div>
-            <div className="calendar__task-selection"> {/* Added task selection */}
+            <div className="calendar__task-selection">
               <label htmlFor="task">Task:</label>
               <select
                 id="task"
@@ -139,7 +158,7 @@ function Calendar() {
               </select>
             </div>
             <div className="calendar__button-container">
-            <button className="calendar__confirm-button" onClick={handleConfirmClick}>
+              <button className="calendar__confirm-button" onClick={handleConfirmClick}>
                 Confirm
               </button>
               <button className="calendar__cancel-button" onClick={closeModal}>

@@ -158,14 +158,14 @@ export default function ProjectDetails() {
       </div>
       <div className="ProjectDetails__tasks">
         <h3>Projects Details</h3>
-        <ul>
+        <p>
           {tasks.map(task => (
-            <li key={task.id}>
+            <p key={task.id}>
               <a>{task.task_name}</a>
               <p>Start Date: {task.task_start_date} | Deadline: {task.task_deadline}</p>
-            </li>
+            </p>
           ))}
-        </ul>
+        </p>
       </div>
     </div>
   );
