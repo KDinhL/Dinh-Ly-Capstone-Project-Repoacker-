@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
+import axios from 'axios'; // Import Axios for making HTTP requests
 import "./Login.scss"; // Import your styles (ensure the path is correct)
 
 Modal.setAppElement('#root');
@@ -45,14 +46,36 @@ const Login = ({ history }) => {
             setShowSignUpModal(false);
         }
     };
-    const handleLogin = () => {
-        // Check if username and password are empty
-        if (username.trim() == '' || password.trim() == '') {
+    const handleLogin = async () => {
+        try {
+          // Check if username and password are empty
+          if (username.trim() === '' || password.trim() === '') {
             setError('Please enter both username and password.');
-        } else {
+          } else {
             setError(''); // Clear the error message
+    
+            // Make a login request to your backend API
+            const response = await axios.post('http://localhost:8081/login', {
+              username: username,
+              password: password,
+            });
+    
+            // Assuming your backend sends a token upon successful login
+            const token = response.data.token;
+    
+            // Store the token in localStorage or a state management system of your choice
+            // For example, you can use Redux or React Context
+            localStorage.setItem('token', token);
+    
+            // Redirect the user to the main page or any other route
+            history.push('/main');
+          }
+        } catch (error) {
+          // Handle error responses from the backend (e.g., invalid credentials)
+          setError('Invalid credentials');
+          console.error(error);
         }
-    };
+      };
 
 
     

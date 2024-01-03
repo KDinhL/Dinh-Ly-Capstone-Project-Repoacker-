@@ -14,7 +14,6 @@ function Calendar() {
   const [selectedHour, setSelectedHour] = useState('12');
   const [selectedMinute, setSelectedMinute] = useState('00');
   const [selectedAmPm, setSelectedAmPm] = useState('AM');
-  const [selectedTaskName, setSelectedTaskName] = useState('');
   const [calendarEvents, setCalendarEvents] = useState([]);
   const selectedTaskId = parseInt(selectedTask, 10);
   const selectedTaskObject = tasks.find((task) => task.task_id === selectedTaskId);
@@ -36,38 +35,53 @@ function Calendar() {
     openModal(dateClickInfo.date);
   };
 
- const handleConfirmClick = () => {
-  console.log('Confirm button clicked');
-  console.log('Selected Task:', selectedTask);
-
-  if (selectedTask) {
-    const selectedTaskId = parseInt(selectedTask, 10);
-    const selectedTaskObject = tasks.find((task) => task.task_id === selectedTaskId);
-    
-    if (selectedTaskObject) {
-      // Create a new Date object for the selected time
-      const selectedTime = new Date(selectedDate);
-      selectedTime.setHours(selectedAmPm === 'PM' ? parseInt(selectedHour, 10) + 12 : parseInt(selectedHour, 10));
-      selectedTime.setMinutes(parseInt(selectedMinute, 10));
-
-      // Format the time as HH:MM AM/PM
-      const formattedTime = selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      const eventTitle = `${selectedTaskObject.task_name} at ${formattedTime}`;
-      const newEvent = {
-        title: eventTitle,
-        date: selectedTime.toISOString(),
-      };
-      
-      setCalendarEvents([...calendarEvents, newEvent]);
-      closeModal();
+  const handleConfirmClick = () => {
+    console.log('Confirm button clicked');
+    console.log('Selected Task:', selectedTask);
+  
+    if (selectedTask) {
+      const selectedTaskId = parseInt(selectedTask, 10);
+      const selectedTaskObject = tasks.find((task) => task.task_id === selectedTaskId);
+  
+      if (selectedTaskObject) {
+        // Create a new Date object for the selected time
+        const selectedTime = new Date(selectedDate);
+        selectedTime.setHours(selectedAmPm === 'PM' ? parseInt(selectedHour, 10) + 12 : parseInt(selectedHour, 10));
+        selectedTime.setMinutes(parseInt(selectedMinute, 10));
+  
+        // Format the time as HH:MM AM/PM
+        const formattedTime = selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+        // Calculate the task duration in days
+        const taskDurationInDays = Math.ceil((new Date(selectedTaskObject.task_deadline) - selectedTime) / (24 * 60 * 60 * 1000));
+  
+        // Create an array of events for each day of the task duration
+        const taskEvents = Array.from({ length: taskDurationInDays }, (_, index) => {
+          const currentDay = new Date(selectedTime);
+          currentDay.setDate(currentDay.getDate() + index);
+  
+          const eventTitle =
+            index === 0
+              ? `${selectedTaskObject.task_description}; ${selectedTaskObject.task_start_date} to ${selectedTaskObject.task_deadline}`
+              : '';
+  
+          return {
+            title: eventTitle,
+            start: currentDay.toISOString(),
+          };
+        });
+  
+        setCalendarEvents([...calendarEvents, ...taskEvents]);
+        closeModal();
+      } else {
+        console.error('Selected task not found in tasks list.');
+      }
     } else {
-      console.error('Selected task not found in tasks list.');
+      alert('Please select a task before confirming.');
     }
-  } else {
-    alert('Please select a task before confirming.');
-  }
-};
+  };
+  
+  
 
   useEffect(() => {
     async function fetchTasks() {
@@ -76,6 +90,16 @@ function Calendar() {
         if (response.ok) {
           const data = await response.json();
           setTasks(data);
+  
+          // Extracting events for the calendar with different colors for each task
+          const events = data.map((task) => ({
+            title: `${task.task_description}; ${task.task_start_date} to ${task.task_deadline}`,
+            start: task.task_start_date, // Assuming task_start_date is a valid date format
+            end: task.task_deadline, // Assuming task_deadline is a valid date format
+            color: getRandomColor(), // Assign a color to each task
+          }));
+  
+          setCalendarEvents(events);
         } else {
           console.error('Failed to fetch tasks.');
         }
@@ -83,10 +107,17 @@ function Calendar() {
         console.error('Error fetching tasks:', error);
       }
     }
-
+  
     fetchTasks();
   }, []);
-
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
   return (
     <div className={`calendar`}>
       <FullCalendar
