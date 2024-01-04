@@ -7,7 +7,8 @@ const port = process.env.PORT || 8081;
 app.use(cors({
   origin: process.env.CORS_ORIGIN,
 }));
-
+const cors = require('cors');
+app.use(cors());
 app.use(express.json());
 
 const tasksRoutes = require('./routes/tasks');
