@@ -12,6 +12,19 @@
   align-items: center;
   padding: 16px;
 
+  &__sign-out-button {
+    background-color: $primary-color-2; 
+    color: $primary-color-3; 
+    border: 0.0625rem solid $border-color;
+    padding: .5rem 1rem; 
+    margin-left: 1rem; 
+  
+    &:hover {
+      background-color: darken($primary-color-2, 10%); 
+      cursor: pointer;
+    }
+  }
+  
   &__quote {
     display: block;
     width: 100%;
@@ -105,8 +118,8 @@
     flex-shrink: 2;
 
     &--image {
-      height: 50px;
-      margin: 0 16px;
+      height: 3.125rem;
+      margin: 0 1rem;
 
       @include mobile {
         p {
@@ -114,6 +127,7 @@
           line-height: 1.5rem;
         }
       }
+      
     }
 
     @include desktop {

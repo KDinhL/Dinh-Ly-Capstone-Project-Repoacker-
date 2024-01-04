@@ -26,8 +26,8 @@ $primary-color: #2E66E5;
 
         &:focus {
             outline: none;
-            border-color: $primary-color; 
-            box-shadow: 0 0 5px rgba($primary-color, 0.5); 
+            border-color: $primary-color;
+            box-shadow: 0 0 5px rgba($primary-color, 0.5);
         }
     }
 
@@ -48,6 +48,11 @@ $primary-color: #2E66E5;
 
     p {
         margin-top: 10px;
+
+        & span:hover {
+            cursor: pointer;
+            color: #007bff;
+        }
     }
 
     a {
@@ -60,7 +65,7 @@ $primary-color: #2E66E5;
         }
     }
 
-    
+
     @media screen and (max-width: 768px) {
         width: 90%;
         max-width: none;
@@ -74,43 +79,44 @@ $primary-color: #2E66E5;
     padding: 20px;
     z-index: 1001;
     border-radius: 5px;
-    width: 60%; /* Set the width to 60% of the screen size */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-height: 50%;
+    width: 60%;
+    /* Set the width to 60% of the screen size */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50%;
 
     button {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 5px;
-      margin-top: 10px;
-  
-      &:hover {
-        background-color: #0056b3;
-      }
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-top: 10px;
+
+        &:hover {
+            background-color: #0056b3;
+        }
     }
 }
 
 .modal-overlay-login {
     position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .error {
-    color: #FF0000; 
+    color: #FF0000;
     font-size: 1rem;
     margin-top: 10px;
     text-align: center;

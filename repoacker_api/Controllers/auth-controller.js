@@ -115,8 +115,24 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const checkUserExists = async (req, res, next) => {
+  try {
+      const { username, email } = req.body;
+
+      // Check if the user already exists in the database
+      const existingUser = await knex("auth_table")
+          .where({ username: username, email: email })
+          .first();
+
+      res.status(200).json({ exists: !!existingUser });
+  } catch (error) {
+      next(`Error checking user existence: ${error}`);
+  }
+};
+
 module.exports = {
   signup,
   login,
   getUser,
+  checkUserExists, 
 };

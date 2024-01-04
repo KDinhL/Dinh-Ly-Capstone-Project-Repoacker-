@@ -19,7 +19,7 @@ import Calendar from "./components/Calendar/Calendar";
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <Header/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/main" element={<MainPage />} />

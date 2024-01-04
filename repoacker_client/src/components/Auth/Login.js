@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import axios from 'axios'; // Import Axios for making HTTP requests
-import "./Login.scss"; // Import your styles (ensure the path is correct)
+import axios from 'axios';
+import './Login.scss';
 
 Modal.setAppElement('#root');
 
@@ -20,7 +20,12 @@ const Login = ({ history }) => {
         setAboutAppModalOpen(false);
     };
 
-    // State for signup form
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
+    };
+
     const [showSignUpModal, setShowSignUpModal] = useState(false);
     const [signupData, setSignupData] = useState({
         email: '',
@@ -29,60 +34,97 @@ const Login = ({ history }) => {
         repeatPassword: '',
         error: '',
     });
+
     const [error, setError] = useState('');
-    const [repeatPassword, setRepeatPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [newUsername, setNewUsername] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const handleSignUp = () => {
-        // Check if all fields are filled and passwords match
-        if (!signupData.email || !signupData.newUsername || !signupData.newPassword || !signupData.repeatPassword) {
-            setSignupData({ ...signupData, error: 'Please fill in all fields.' });
-        } else if (signupData.newPassword !== signupData.repeatPassword) {
-            setSignupData({ ...signupData, error: 'Passwords do not match.' });
-        } else {
-            // Perform signup logic here (e.g., create a new user)
-            // For the demo, just close the modal
-            setShowSignUpModal(false);
+
+    const handleSignUp = async () => {
+        try {
+            const { email, newUsername, newPassword, repeatPassword } = signupData;
+
+            // Email format validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                setSignupData({ ...signupData, error: 'Invalid email format.' });
+                return;
+            }
+
+            // Check if username or email already exists
+            const userExistsResponse = await axios.post('http://localhost:8080/api/auth/signup/checkUserExists', {
+                username: newUsername,
+                email: email,
+            });
+
+            if (userExistsResponse.data.exists) {
+                setSignupData({ ...signupData, error: 'Username or email already exists.' });
+                return;
+            }
+
+            // Additional error handling for other scenarios
+            if (!newUsername || !newPassword || !repeatPassword) {
+                setSignupData({ ...signupData, error: 'Please fill in all fields.' });
+            } else if (newPassword !== repeatPassword) {
+                setSignupData({ ...signupData, error: 'Passwords do not match.' });
+            } else {
+                // Send signup data to the server
+                const response = await axios.post('http://localhost:8080/api/auth/signup', {
+                    username: newUsername,
+                    password: newPassword,
+                    email: email,
+                });
+
+                // Assuming the server responds with the newly created user data
+                const newUser = response.data.user;
+
+                // Close the signup modal
+                setShowSignUpModal(false);
+            }
+        } catch (error) {
+            console.error(error);
+            // Handle other errors as needed
         }
     };
+
     const handleLogin = async () => {
         try {
-          // Check if username and password are empty
-          if (username.trim() === '' || password.trim() === '') {
-            setError('Please enter both username and password.');
-          } else {
-            setError(''); // Clear the error message
-    
-            // Make a login request to your backend API
-            const response = await axios.post('http://localhost:8081/login', {
-              username: username,
-              password: password,
-            });
-    
-            // Assuming your backend sends a token upon successful login
-            const token = response.data.token;
-    
-            // Store the token in localStorage or a state management system of your choice
-            // For example, you can use Redux or React Context
-            localStorage.setItem('token', token);
-    
-            // Redirect the user to the main page or any other route
-            history.push('/main');
-          }
+            if (username.trim() === '' || password.trim() === '') {
+                setError('Please enter both username and password.');
+            } else {
+                setError('');
+
+                const response = await axios.post('http://localhost:8080/api/auth/login', {
+                    username: username,
+                    password: password,
+                });
+
+                const { message, user } = response.data;
+
+                if (message === 'Login successful') {
+                    console.log('Logged in successfully:', user);
+
+                    // Simulating a successful login
+                    const loggedInUsername = username;
+
+                    // Save the username in local storage
+                    localStorage.setItem('loggedInUsername', loggedInUsername);
+
+                    window.location.href = '/main';
+                } else {
+                    setError(message);
+                }
+            }
         } catch (error) {
-          // Handle error responses from the backend (e.g., invalid credentials)
-          setError('Invalid credentials');
-          console.error(error);
+            if (error.response && error.response.status === 401) {
+                setError('Invalid username or password.');
+            } else {
+                console.error('Unexpected error during login:', error);
+                setError('An unexpected error occurred. Please try again.');
+            }
         }
-      };
+    };
 
-
-    
     return (
         <div className="login-container">
             <h2>Login</h2>
-            {/* Input fields for login */}
             <input
                 type="text"
                 placeholder="Username"
@@ -94,10 +136,18 @@ const Login = ({ history }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={handleKeyPress}
+
             />
             {error && <p className="error">{error}</p>}
-            {/* Link for navigation */}
-            <Link to={username.trim() !== '' && password.trim() !== '' ? '/main' : '#'}>
+            <Link to="#" onClick={(e) => {
+                if (error) {
+                    e.preventDefault();
+                    console.log('Error during login. Cannot proceed to next page.');
+                } else {
+                    // No error, proceed with the link
+                }
+            }}>
                 <button onClick={handleLogin}>Log In</button>
             </Link>
 
@@ -106,7 +156,6 @@ const Login = ({ history }) => {
                 <span onClick={() => setShowSignUpModal(true)}>Sign Up</span>
             </p>
 
-            {/* Signup Modal */}
             <Modal
                 isOpen={showSignUpModal}
                 onRequestClose={() => setShowSignUpModal(false)}
@@ -115,25 +164,28 @@ const Login = ({ history }) => {
             >
                 <h2>Sign Up</h2>
                 {signupData.error && <p className="error">{signupData.error}</p>}
-                {/* Input fields for signup */}
+                <label>Email</label>
                 <input
                     type="email"
                     placeholder="Email"
                     value={signupData.email}
                     onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
                 />
+                <label>Username</label>
                 <input
                     type="text"
                     placeholder="Username"
                     value={signupData.newUsername}
                     onChange={(e) => setSignupData({ ...signupData, newUsername: e.target.value })}
                 />
+                <label>Password</label>
                 <input
                     type="password"
                     placeholder="Password"
                     value={signupData.newPassword}
                     onChange={(e) => setSignupData({ ...signupData, newPassword: e.target.value })}
                 />
+                <label>Repeat Password</label>
                 <input
                     type="password"
                     placeholder="Repeat Password"
@@ -146,4 +198,5 @@ const Login = ({ history }) => {
         </div>
     );
 };
+
 export default Login;

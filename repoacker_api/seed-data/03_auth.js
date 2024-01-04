@@ -19,5 +19,12 @@ module.exports = [
     "password": "new_password",
     "email": "new_user@example.com",
     "salt": "81o80Zb3oiVSpbti"
+  },
+  {
+    "id": 4,
+    "username": "admin",
+    "password": "admin",
+    "email": "admin@gmail.com",
+    "salt": "rKRbrx1LUJO06GUI"
   }
 ];
