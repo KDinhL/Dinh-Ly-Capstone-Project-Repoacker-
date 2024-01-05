@@ -20,4 +20,14 @@ export const urlProjectTasks = (projectId) => {
   return `${url}/api/projects/${projectId}/tasks`;
 };
 
+export const urlUserExistsResponse = (projectId) => {
+  return `${url}/api/auth/signup/checkUserExists`;
+};
 
+export const urlSignUp = (projectId) => {
+  return `${url}/api/auth/signup`;
+};
+
+export const urlLogin = (projectId) => {
+  return `${url}/api/auth/login`;
+};

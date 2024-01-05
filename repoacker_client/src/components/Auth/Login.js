@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import axios from 'axios';
 import './Login.scss';
+import { urlUserExistsResponse } from "../../utils/api-utils";
+import { urlSignUp } from "../../utils/api-utils";
+import { urlLogin } from "../../utils/api-utils";
 
 Modal.setAppElement('#root');
 
@@ -49,7 +52,7 @@ const Login = ({ history }) => {
             }
 
             // Check if username or email already exists
-            const userExistsResponse = await axios.post('http://localhost:8080/api/auth/signup/checkUserExists', {
+            const userExistsResponse = await axios.post(urlUserExistsResponse, {
                 username: newUsername,
                 email: email,
             });
@@ -66,7 +69,7 @@ const Login = ({ history }) => {
                 setSignupData({ ...signupData, error: 'Passwords do not match.' });
             } else {
                 // Send signup data to the server
-                const response = await axios.post('http://localhost:8080/api/auth/signup', {
+                const response = await axios.post(urlSignUp, {
                     username: newUsername,
                     password: newPassword,
                     email: email,
@@ -91,7 +94,7 @@ const Login = ({ history }) => {
             } else {
                 setError('');
 
-                const response = await axios.post('http://localhost:8080/api/auth/login', {
+                const response = await axios.post(urlLogin, {
                     username: username,
                     password: password,
                 });
