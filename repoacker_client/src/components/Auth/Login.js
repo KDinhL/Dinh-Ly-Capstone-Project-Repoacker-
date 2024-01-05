@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import axios from 'axios';
 import './Login.scss';
-import { urlUserExistsResponse } from "../../utils/api-utils";
-import { urlSignUp } from "../../utils/api-utils";
-import { urlLogin } from "../../utils/api-utils";
+import { urlUserExistsResponse, urlSignUp, urlLogin } from "../../utils/api-utils";
 
 Modal.setAppElement('#root');
 
@@ -52,7 +50,7 @@ const Login = ({ history }) => {
             }
 
             // Check if username or email already exists
-            const userExistsResponse = await axios.post(urlUserExistsResponse, {
+            const userExistsResponse = await axios.post(urlUserExistsResponse(), {
                 username: newUsername,
                 email: email,
             });
@@ -69,7 +67,7 @@ const Login = ({ history }) => {
                 setSignupData({ ...signupData, error: 'Passwords do not match.' });
             } else {
                 // Send signup data to the server
-                const response = await axios.post(urlSignUp, {
+                const response = await axios.post(urlSignUp(), {
                     username: newUsername,
                     password: newPassword,
                     email: email,
@@ -94,7 +92,8 @@ const Login = ({ history }) => {
             } else {
                 setError('');
 
-                const response = await axios.post(urlLogin, {
+                // Perform login using the login URL from api-utils
+                const response = await axios.post(urlLogin(), {
                     username: username,
                     password: password,
                 });
@@ -140,13 +139,12 @@ const Login = ({ history }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyPress={handleKeyPress}
-
             />
             {error && <p className="error">{error}</p>}
             <Link to="#" onClick={(e) => {
                 if (error) {
                     e.preventDefault();
-                    console.log('Error during login. Cannot proceed to next page.');
+                    console.log('Error during login. Cannot proceed to the next page.');
                 } else {
                     // No error, proceed with the link
                 }
